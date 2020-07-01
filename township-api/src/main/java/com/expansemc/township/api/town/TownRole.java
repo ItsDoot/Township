@@ -38,7 +38,7 @@ public interface TownRole extends Role {
         /**
          * Sets the associated town of the role.
          *
-         * @param town The town to set
+         * @param town The town to use
          * @return This builder, for chaining
          */
         Builder town(Town town);

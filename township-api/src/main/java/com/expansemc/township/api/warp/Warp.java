@@ -11,7 +11,7 @@ import org.spongepowered.api.world.ServerLocation;
 public interface Warp extends Identifiable, Nameable {
 
     /**
-     * Gets the name of the warp.
+     * Gets the name of this warp.
      *
      * @return The name
      */
@@ -19,7 +19,7 @@ public interface Warp extends Identifiable, Nameable {
     String getName();
 
     /**
-     * Sets the name of the warp.
+     * Sets the name of this warp.
      *
      * @param name The new name
      */
@@ -41,10 +41,28 @@ public interface Warp extends Identifiable, Nameable {
 
     interface Builder<T extends Warp, B extends Builder<T, B>> extends ResettableBuilder<T, B> {
 
+        /**
+         * Sets the name of the warp.
+         *
+         * @param name The name to use
+         * @return This builder, for chaining
+         */
         B name(String name);
 
+        /**
+         * Sets the location of the warp.
+         *
+         * @param location The location to use
+         * @return This builder, for chaining
+         */
         B location(ServerLocation location);
 
+        /**
+         * Builds the {@link Warp} of type {@link T}.
+         *
+         * @return The built warp
+         * @throws IllegalStateException If not all required options were specified
+         */
         T build();
     }
 }

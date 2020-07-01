@@ -6,6 +6,9 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.util.CatalogBuilder;
 import org.spongepowered.api.util.annotation.CatalogedBy;
 
+/**
+ * A type of Township permission.
+ */
 @CatalogedBy(PermissionTypes.class)
 public interface PermissionType extends CatalogType {
 

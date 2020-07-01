@@ -55,7 +55,7 @@ data class TownImpl(
         TODO("Not yet implemented")
     }
 
-    override fun containsResident(resident: Resident): Boolean =
+    override fun hasResident(resident: Resident): Boolean =
         resident.uniqueId in this.residents
 
     override fun addResident(resident: Resident): Boolean =

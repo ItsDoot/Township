@@ -26,4 +26,12 @@ public interface ResidentCollection extends MessageReceiver {
      * @return The resident, if available
      */
     Optional<Resident> getResident(UUID uniqueId);
+
+    /**
+     * Checks whether the provided resident is a member of this collection.
+     *
+     * @param resident The resident to check
+     * @return True if the resident is in this collection, false otherwise
+     */
+    boolean hasResident(Resident resident);
 }
