@@ -55,7 +55,7 @@ public interface Town extends Identifiable, MessageReceiver {
     TownRole getVisitorRole();
 
     default Collection<TownRole> getRoles() {
-        return TownRoleService.getInstance().getRolesByTown(this);
+        return TownRoleService.getInstance().getRolesFor(this);
     }
 
     default Optional<TownRole> getRole(String name) {

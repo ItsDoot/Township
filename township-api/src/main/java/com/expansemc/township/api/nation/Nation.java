@@ -114,7 +114,7 @@ public interface Nation extends Identifiable, MessageReceiver {
      * @return All registered roles
      */
     default Collection<NationRole> getRoles() {
-        return NationRoleService.getInstance().getRoles(this);
+        return NationRoleService.getInstance().getRolesFor(this);
     }
 
     /**

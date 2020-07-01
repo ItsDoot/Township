@@ -15,7 +15,7 @@ class TownRoleServiceImpl : TownRoleService {
         TODO("Not yet implemented")
     }
 
-    override fun getRolesByTown(town: Town?): MutableCollection<TownRole> {
+    override fun getRolesFor(town: Town?): MutableCollection<TownRole> {
         TODO("Not yet implemented")
     }
 

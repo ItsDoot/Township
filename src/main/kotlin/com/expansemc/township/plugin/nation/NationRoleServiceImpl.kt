@@ -15,7 +15,7 @@ class NationRoleServiceImpl : NationRoleService {
         TODO("Not yet implemented")
     }
 
-    override fun getRoles(nation: Nation?): MutableCollection<NationRole> {
+    override fun getRolesFor(nation: Nation?): MutableCollection<NationRole> {
         TODO("Not yet implemented")
     }
 
