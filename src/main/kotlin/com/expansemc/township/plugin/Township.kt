@@ -2,27 +2,19 @@ package com.expansemc.township.plugin
 
 import com.expansemc.township.api.TownshipAPI
 import com.expansemc.township.api.claim.ClaimService
-import com.expansemc.township.api.nation.NationRoleService
 import com.expansemc.township.api.nation.NationService
 import com.expansemc.township.api.permission.Permission
 import com.expansemc.township.api.permission.PermissionType
 import com.expansemc.township.api.resident.ResidentService
-import com.expansemc.township.api.town.Town
-import com.expansemc.township.api.town.TownRoleService
 import com.expansemc.township.api.town.TownService
-import com.expansemc.township.api.town.TownWarpService
 import com.expansemc.township.plugin.claim.ClaimServiceImpl
-import com.expansemc.township.plugin.data.TownshipKeys
 import com.expansemc.township.plugin.listener.BlockListener
 import com.expansemc.township.plugin.listener.ConnectionListener
-import com.expansemc.township.plugin.nation.NationRoleServiceImpl
 import com.expansemc.township.plugin.nation.NationServiceImpl
 import com.expansemc.township.plugin.permission.PermissionImpl
 import com.expansemc.township.plugin.permission.PermissionTypeImpl
 import com.expansemc.township.plugin.resident.ResidentServiceImpl
-import com.expansemc.township.plugin.town.TownRoleServiceImpl
 import com.expansemc.township.plugin.town.TownServiceImpl
-import com.expansemc.township.plugin.town.TownWarpServiceImpl
 import com.google.common.reflect.TypeToken
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -47,10 +39,7 @@ class Township {
     private lateinit var residentService: ResidentService
     private lateinit var claimService: ClaimService
     private lateinit var townService: TownService
-    private lateinit var townRoleService: TownRoleService
-    private lateinit var townWarpService: TownWarpService
     private lateinit var nationService: NationService
-    private lateinit var nationRoleService: NationRoleService
 
     @Listener
     fun onConstruct(event: ConstructPluginEvent) {
@@ -63,10 +52,7 @@ class Township {
         this.residentService = ResidentServiceImpl()
         this.claimService = ClaimServiceImpl()
         this.townService = TownServiceImpl()
-        this.townRoleService = TownRoleServiceImpl()
-        this.townWarpService = TownWarpServiceImpl()
         this.nationService = NationServiceImpl()
-        this.nationRoleService = NationRoleServiceImpl()
     }
 
     @Listener
@@ -79,10 +65,7 @@ class Township {
             residentService,
             claimService,
             townService,
-            townRoleService,
-            townWarpService,
-            nationService,
-            nationRoleService
+            nationService
         )
 
         event.register(TownshipAPI::class.java, api)

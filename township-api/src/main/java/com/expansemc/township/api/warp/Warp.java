@@ -4,6 +4,9 @@ import org.spongepowered.api.util.Identifiable;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.ServerLocation;
 
+/**
+ * A named teleport location.
+ */
 public interface Warp extends Identifiable {
 
     /**

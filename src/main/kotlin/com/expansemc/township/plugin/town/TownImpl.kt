@@ -4,7 +4,7 @@ import com.expansemc.township.api.resident.Resident
 import com.expansemc.township.api.resident.ResidentService
 import com.expansemc.township.api.town.Town
 import com.expansemc.township.api.town.TownRole
-import com.expansemc.township.api.town.TownRoleService
+import com.expansemc.township.api.town.TownWarp
 import com.expansemc.township.plugin.util.unwrap
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.service.economy.EconomyService
@@ -60,13 +60,51 @@ data class TownImpl(
     override fun removeResident(resident: Resident): Boolean =
         this.residents.remove(resident.uniqueId)
 
-    override fun getVisitorRole(): TownRole =
-        TownRoleService.getInstance().getRole(this.uniqueId)
-            .orElseThrow { IllegalStateException("Town $name has no visitor role!") }
+    override fun getVisitorRole(): TownRole = TODO()
 
     override fun getAccount(): Optional<Account> =
         Sponge.getServiceManager().provide(EconomyService::class.java)
             .flatMap { it.getOrCreateAccount("town-$uniqueId") }
+
+    override fun getRoles(): MutableCollection<TownRole> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getRole(name: String?): Optional<TownRole> {
+        TODO("Not yet implemented")
+    }
+
+    override fun hasRole(role: TownRole?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun addRole(role: TownRole?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeRole(role: TownRole?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWarps(): MutableCollection<TownWarp> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWarp(name: String?): Optional<TownWarp> {
+        TODO("Not yet implemented")
+    }
+
+    override fun hasWarp(warp: TownWarp?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun addWarp(warp: TownWarp?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeWarp(warp: TownWarp?): Boolean {
+        TODO("Not yet implemented")
+    }
 
     override fun sendMessage(message: Text) {
         this.messageChannel.send(message)

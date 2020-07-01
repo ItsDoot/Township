@@ -5,7 +5,6 @@ import com.expansemc.township.api.resident.ResidentService
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.town.Town
 import com.expansemc.township.api.town.TownRole
-import com.expansemc.township.api.town.TownRoleService
 import com.expansemc.township.api.town.TownService
 import com.expansemc.township.plugin.data.TownshipKeys
 import com.expansemc.township.plugin.util.getSetOrEmpty
@@ -69,9 +68,7 @@ data class UserResidentImpl(private val uniqueId: UUID) : UserResident {
         }
     }
 
-    override fun getTownRoles(): Collection<TownRole> =
-        this.user.getSetOrEmpty(TownshipKeys.TOWN_ROLES)
-        .mapNotNull { TownRoleService.getInstance().getRole(it).unwrap() }
+    override fun getTownRoles(): Collection<TownRole> = TODO()
 
     override fun hasRole(role: TownRole): Boolean =
         role.uniqueId in this.user.getSetOrEmpty(TownshipKeys.TOWN_ROLES)

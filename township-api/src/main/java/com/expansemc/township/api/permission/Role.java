@@ -46,7 +46,7 @@ public interface Role extends Identifiable, DataSerializable, PermissionHolder {
          * @param permissions The permissions to set
          * @return This builder, for chaining
          */
-        B permissionS(Permission... permissions);
+        B permissions(Permission... permissions);
 
         T build();
     }

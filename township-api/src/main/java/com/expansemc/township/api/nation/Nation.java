@@ -1,7 +1,11 @@
 package com.expansemc.township.api.nation;
 
+import com.expansemc.township.api.bank.Bank;
+import com.expansemc.township.api.permission.RoleCollection;
 import com.expansemc.township.api.resident.Resident;
+import com.expansemc.township.api.resident.ResidentCollection;
 import com.expansemc.township.api.town.Town;
+import com.expansemc.township.api.warp.WarpCollection;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.service.economy.Currency;
 import org.spongepowered.api.service.economy.account.Account;
@@ -13,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface Nation extends Identifiable, MessageReceiver {
+public interface Nation extends Identifiable, ResidentCollection, RoleCollection<NationRole>, WarpCollection<NationWarp>, Bank {
 
     /**
      * Creates a new {@link Builder} to build a {@link Nation}.
@@ -61,6 +65,10 @@ public interface Nation extends Identifiable, MessageReceiver {
      */
     Town getOwner();
 
+    default Resident getOwnerResident() {
+        return this.getOwner().getOwner();
+    }
+
     /**
      * Checks if the specified town is the owner of the nation.
      *
@@ -107,55 +115,6 @@ public interface Nation extends Identifiable, MessageReceiver {
      * @return True if the action was successful
      */
     boolean removeTown(Town town);
-
-    /**
-     * Gets all roles registered to the nation.
-     *
-     * @return All registered roles
-     */
-    default Collection<NationRole> getRoles() {
-        return NationRoleService.getInstance().getRolesFor(this);
-    }
-
-    /**
-     * Gets the role with the specified name that's registered to the nation,
-     * if available.
-     *
-     * @param name The name to find
-     * @return The role, if available
-     */
-    default Optional<NationRole> getRole(String name) {
-        return NationRoleService.getInstance().getRole(this, name);
-    }
-
-    /**
-     * Gets all residents in the nation.
-     *
-     * @return All nation residents
-     */
-    Collection<Resident> getResidents();
-
-    /**
-     * Gets the {@link Account} associated with the nation, if available.
-     *
-     * @return The associated account, if available
-     */
-    Optional<Account> getAccount();
-
-    /**
-     * Gets the nation's current balance in the specified currency.
-     *
-     * @param currency The currency to check
-     * @return The nation's current balance
-     */
-    BigDecimal getBalance(Currency currency);
-
-    /**
-     * Gets the nation's current balance in the default currency.
-     *
-     * @return The nation's current balance
-     */
-    BigDecimal getBalance();
 
     interface Builder extends ResettableBuilder<Nation, Builder> {
 
