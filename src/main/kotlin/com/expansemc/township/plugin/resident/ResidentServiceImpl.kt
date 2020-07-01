@@ -1,5 +1,6 @@
 package com.expansemc.township.plugin.resident
 
+import com.expansemc.township.api.resident.Resident
 import com.expansemc.township.api.resident.ResidentService
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.resident.VirtualResident
@@ -7,6 +8,14 @@ import org.spongepowered.api.entity.living.player.User
 import java.util.*
 
 class ResidentServiceImpl : ResidentService {
+
+    override fun getResidents(): MutableCollection<Resident> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getResident(uniqueId: UUID?): Optional<Resident> {
+        TODO("Not yet implemented")
+    }
 
     override fun getUserResidents(): MutableCollection<UserResident> {
         TODO("Not yet implemented")

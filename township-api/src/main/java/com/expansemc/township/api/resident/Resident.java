@@ -1,6 +1,9 @@
 package com.expansemc.township.api.resident;
 
+import com.expansemc.township.api.nation.Nation;
+import com.expansemc.township.api.nation.NationRole;
 import com.expansemc.township.api.permission.PermissionHolder;
+import com.expansemc.township.api.permission.RoleRegistry;
 import com.expansemc.township.api.town.Town;
 import com.expansemc.township.api.town.TownRole;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -9,7 +12,6 @@ import org.spongepowered.api.text.channel.MessageReceiver;
 import org.spongepowered.api.util.Identifiable;
 import org.spongepowered.api.util.Nameable;
 
-import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -48,35 +50,17 @@ public interface Resident extends Identifiable, Nameable, MessageReceiver, Permi
     }
 
     /**
-     * Gets all town roles this resident is granted.
+     * Gets the {@link Nation} that this resident's town is part of.
      *
-     * @return All granted town roles
+     * @return The belonging nation, if available
      */
-    Collection<TownRole> getTownRoles();
+    default Optional<Nation> getNation() {
+        return this.getTown().flatMap(Town::getNation);
+    }
 
-    /**
-     * Checks if the provided role is granted to this resident.
-     *
-     * @param role The role to check
-     * @return True if the role is granted, false otherwise
-     */
-    boolean hasRole(TownRole role);
+    RoleRegistry.Mutable<TownRole> getTownRoles();
 
-    /**
-     * Grants the provided role to this resident.
-     *
-     * @param role The role to add
-     * @return True if the role was successfully granted, false otherwise
-     */
-    boolean addRole(TownRole role);
-
-    /**
-     * Removes the provided role from this resident.
-     *
-     * @param role The role to remove
-     * @return True if the role was successfully removed, false otherwise
-     */
-    boolean removeRole(TownRole role);
+    RoleRegistry.Mutable<NationRole> getNationRoles();
 
     /**
      * Gets the {@link Account} associated with this resident.

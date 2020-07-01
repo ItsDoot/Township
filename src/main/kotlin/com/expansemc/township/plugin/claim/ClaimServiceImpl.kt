@@ -12,27 +12,27 @@ import java.util.*
 
 class ClaimServiceImpl : ClaimService {
 
-    private val claimTable: Table<ServerWorld, Vector3i, Claim> =
+    private val claimTable: Table<UUID, Vector3i, Claim> =
         HashBasedTable.create()
 
     override fun getClaimAt(location: ServerLocation): Optional<Claim> =
-        Optional.ofNullable(this.claimTable[location.world, location.chunkPosition])
+        Optional.ofNullable(this.claimTable[location.world.uniqueId, location.chunkPosition])
 
     override fun getClaimsByWorld(world: ServerWorld): Collection<Claim> =
-        this.claimTable.row(world).values.toList()
+        this.claimTable.row(world.uniqueId).values.toList()
 
     override fun getClaimsByTown(town: Town): Collection<Claim> =
         this.claimTable.values().filter { it.town == town }
 
     override fun hasClaim(claim: Claim): Boolean =
-        this.claimTable.contains(claim.world, claim.chunkPosition)
+        this.claimTable.contains(claim.world.uniqueId, claim.chunkPosition)
 
     override fun addClaim(claim: Claim): Boolean {
         if (this.hasClaim(claim)) {
             return false
         }
 
-        this.claimTable.put(claim.world, claim.chunkPosition, claim)
+        this.claimTable.put(claim.world.uniqueId, claim.chunkPosition, claim)
         return true
     }
 
@@ -41,7 +41,7 @@ class ClaimServiceImpl : ClaimService {
             return false
         }
 
-        this.claimTable.remove(claim.world, claim.chunkPosition)
+        this.claimTable.remove(claim.world.uniqueId, claim.chunkPosition)
         return true
     }
 }

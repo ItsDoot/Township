@@ -1,6 +1,9 @@
 package com.expansemc.township.plugin.resident
 
+import com.expansemc.township.api.nation.NationRole
 import com.expansemc.township.api.permission.Permission
+import com.expansemc.township.api.permission.RoleRegistry
+import com.expansemc.township.api.resident.ResidentRegistry
 import com.expansemc.township.api.resident.ResidentService
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.town.Town
@@ -68,31 +71,13 @@ data class UserResidentImpl(private val uniqueId: UUID) : UserResident {
         }
     }
 
-    override fun getTownRoles(): Collection<TownRole> = TODO()
+    override fun getTownRoles(): RoleRegistry.Mutable<TownRole> = TODO()
 
-    override fun hasRole(role: TownRole): Boolean =
-        role.uniqueId in this.user.getSetOrEmpty(TownshipKeys.TOWN_ROLES)
-
-    override fun addRole(role: TownRole): Boolean =
-        this.user.offerSingle(TownshipKeys.TOWN_ROLES, role.uniqueId).isSuccessful
-
-    override fun removeRole(role: TownRole): Boolean =
-        this.user.removeSingle(TownshipKeys.TOWN_ROLES, role.uniqueId).isSuccessful
+    override fun getNationRoles(): RoleRegistry.Mutable<NationRole> = TODO()
 
     override fun getUser(): User =
         Sponge.getServiceManager().provideUnchecked(UserStorageService::class.java)
             .getOrCreate(GameProfile.of(uniqueId))
 
-    override fun getFriends(): Collection<UserResident> =
-        this.user.getSetOrEmpty(TownshipKeys.FRIENDS)
-        .mapNotNull { ResidentService.getInstance().getUserResident(it).unwrap() }
-
-    override fun hasFriend(resident: UserResident): Boolean =
-        resident.uniqueId in this.user.getSetOrEmpty(TownshipKeys.FRIENDS)
-
-    override fun addFriend(resident: UserResident): Boolean =
-        this.user.offerSingle(TownshipKeys.FRIENDS, resident.uniqueId).isSuccessful
-
-    override fun removeFriend(resident: UserResident): Boolean =
-        this.user.removeSingle(TownshipKeys.FRIENDS, resident.uniqueId).isSuccessful
+    override fun getFriends(): ResidentRegistry.Mutable = TODO()
 }

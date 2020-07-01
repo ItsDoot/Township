@@ -3,11 +3,15 @@ package com.expansemc.township.api.town;
 import com.expansemc.township.api.bank.Bank;
 import com.expansemc.township.api.claim.Claim;
 import com.expansemc.township.api.claim.ClaimService;
-import com.expansemc.township.api.permission.RoleCollection;
+import com.expansemc.township.api.nation.Nation;
+import com.expansemc.township.api.permission.RoleRegistry;
 import com.expansemc.township.api.resident.Resident;
-import com.expansemc.township.api.resident.ResidentCollection;
-import com.expansemc.township.api.warp.WarpCollection;
+import com.expansemc.township.api.resident.ResidentRegistry;
+import com.expansemc.township.api.util.OwnedBy;
+import com.expansemc.township.api.warp.WarpRegistry;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.text.channel.MessageReceiver;
 import org.spongepowered.api.util.Identifiable;
 import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
@@ -19,7 +23,7 @@ import java.util.Optional;
 /**
  * A named group of a bank, residents, roles, warps, and claims.
  */
-public interface Town extends Identifiable, Nameable, ResidentCollection, RoleCollection<TownRole>, WarpCollection<TownWarp>, Bank {
+public interface Town extends Identifiable, Nameable, MessageReceiver, OwnedBy<Resident>, Bank {
 
     /**
      * Creates a new {@link Builder} to build a {@link Town}.
@@ -64,6 +68,7 @@ public interface Town extends Identifiable, Nameable, ResidentCollection, RoleCo
      *
      * @return The town owner
      */
+    @Override
     Resident getOwner();
 
     /**
@@ -72,6 +77,7 @@ public interface Town extends Identifiable, Nameable, ResidentCollection, RoleCo
      * @param resident The resident to check
      * @return True if the resident is the town owner, false otherwise
      */
+    @Override
     boolean isOwner(Resident resident);
 
     /**
@@ -79,23 +85,28 @@ public interface Town extends Identifiable, Nameable, ResidentCollection, RoleCo
      *
      * @param resident The new town owner
      */
+    @Override
     void setOwner(Resident resident);
 
-    /**
-     * Adds the provided resident to this town.
-     *
-     * @param resident The resident to add.
-     * @return True if the resident was successfully added, false otherwise
-     */
-    boolean addResident(Resident resident);
+    ResidentRegistry.Mutable getResidents();
+
+    RoleRegistry.Mutable<TownRole> getRoles();
+
+    WarpRegistry.Mutable<TownWarp> getWarps();
 
     /**
-     * Removes the provided resident from this town.
+     * Gets the nation this town is part of.
      *
-     * @param resident The resident to remove.
-     * @return True if the resident was successfully removed, false otherwise
+     * @return This town's nation
      */
-    boolean removeResident(Resident resident);
+    Optional<Nation> getNation();
+
+    /**
+     * Sets the nation this town is part of.
+     *
+     * @param nation The town's new nation, or null to leave the nation
+     */
+    void setNation(@Nullable Nation nation);
 
     /**
      * Gets all claims owned by this town.

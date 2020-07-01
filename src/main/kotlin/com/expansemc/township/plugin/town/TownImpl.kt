@@ -1,13 +1,16 @@
 package com.expansemc.township.plugin.town
 
+import com.expansemc.township.api.nation.Nation
+import com.expansemc.township.api.nation.NationService
+import com.expansemc.township.api.permission.RoleRegistry
 import com.expansemc.township.api.resident.Resident
+import com.expansemc.township.api.resident.ResidentRegistry
 import com.expansemc.township.api.resident.ResidentService
 import com.expansemc.township.api.town.Town
 import com.expansemc.township.api.town.TownRole
 import com.expansemc.township.api.town.TownWarp
-import com.expansemc.township.plugin.util.unwrap
-import org.spongepowered.api.Sponge
-import org.spongepowered.api.service.economy.EconomyService
+import com.expansemc.township.api.warp.WarpRegistry
+import com.expansemc.township.plugin.util.wrap
 import org.spongepowered.api.service.economy.account.Account
 import org.spongepowered.api.text.Text
 import org.spongepowered.api.text.channel.MessageChannel
@@ -17,12 +20,9 @@ data class TownImpl(
     private val uniqueId: UUID,
     private var name: String,
     private var open: Boolean,
-    private var ownerId: UUID
+    private var ownerId: UUID,
+    private var nationId: UUID?
 ) : Town {
-
-    private var messageChannel: MessageChannel = TownMessageChannel(this)
-
-    private val residents = HashSet<UUID>()
 
     override fun getUniqueId(): UUID = this.uniqueId
 
@@ -48,81 +48,26 @@ data class TownImpl(
         this.ownerId = resident.uniqueId
     }
 
-    override fun getResidents(): Collection<Resident> =
-        this.residents.mapNotNull { ResidentService.getInstance().getUserResident(it).unwrap() }
+    override fun getNation(): Optional<Nation> =
+        nationId.wrap().flatMap { NationService.getInstance().getNation(it) }
 
-    override fun getResident(uniqueId: UUID?): Optional<Resident> {
-        TODO("Not yet implemented")
+    override fun setNation(nation: Nation?) {
+        // TODO event
+
+        this.nationId = nation?.uniqueId
     }
 
-    override fun hasResident(resident: Resident): Boolean =
-        resident.uniqueId in this.residents
+    override fun getResidents(): ResidentRegistry.Mutable = TODO()
 
-    override fun addResident(resident: Resident): Boolean =
-        this.residents.add(resident.uniqueId)
+    override fun getRoles(): RoleRegistry.Mutable<TownRole> = TODO()
 
-    override fun removeResident(resident: Resident): Boolean =
-        this.residents.remove(resident.uniqueId)
+    override fun getWarps(): WarpRegistry.Mutable<TownWarp> = TODO()
 
-    override fun getVisitorRole(): TownRole = TODO()
+    override fun sendMessage(message: Text) = TODO()
 
-    override fun getAccount(): Optional<Account> =
-        Sponge.getServiceManager().provide(EconomyService::class.java)
-            .flatMap { it.getOrCreateAccount("town-$uniqueId") }
+    override fun getMessageChannel(): MessageChannel = TODO()
 
-    override fun getRoles(): MutableCollection<TownRole> {
-        TODO("Not yet implemented")
-    }
+    override fun setMessageChannel(channel: MessageChannel?) = TODO()
 
-    override fun getRole(uniqueId: UUID?): Optional<TownRole> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getRole(name: String?): Optional<TownRole> {
-        TODO("Not yet implemented")
-    }
-
-    override fun hasRole(role: TownRole?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun addRole(role: TownRole?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun removeRole(role: TownRole?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun getWarps(): MutableCollection<TownWarp> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getWarp(uniqueId: UUID?): Optional<TownWarp> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getWarp(name: String?): Optional<TownWarp> {
-        TODO("Not yet implemented")
-    }
-
-    override fun hasWarp(warp: TownWarp?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun addWarp(warp: TownWarp?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun removeWarp(warp: TownWarp?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun sendMessage(message: Text) {
-        this.messageChannel.send(message)
-    }
-
-    override fun getMessageChannel(): MessageChannel = this.messageChannel
-
-    override fun setMessageChannel(channel: MessageChannel?) {}
+    override fun getAccount(): Optional<Account> = TODO()
 }

@@ -1,5 +1,7 @@
 package com.expansemc.township.api.resident;
 
+import com.expansemc.township.api.util.registry.IdentifiableRegistry;
+import com.expansemc.township.api.util.registry.Registry;
 import org.spongepowered.api.text.channel.MessageReceiver;
 
 import java.util.Collection;
@@ -9,7 +11,7 @@ import java.util.UUID;
 /**
  * An object which manages residents of a town, nation, etc.
  */
-public interface ResidentCollection extends MessageReceiver {
+public interface ResidentRegistry extends MessageReceiver, IdentifiableRegistry<Resident> {
 
     /**
      * Gets all residents in the collection.
@@ -34,4 +36,7 @@ public interface ResidentCollection extends MessageReceiver {
      * @return True if the resident is in this collection, false otherwise
      */
     boolean hasResident(Resident resident);
+
+    interface Mutable extends ResidentRegistry, Registry.Mutable<Resident> {
+    }
 }

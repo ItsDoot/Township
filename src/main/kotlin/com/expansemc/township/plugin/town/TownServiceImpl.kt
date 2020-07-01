@@ -33,7 +33,7 @@ class TownServiceImpl : TownService {
         this.townsById[town.uniqueId] = town
         this.townsByName[town.name] = town
 
-        for (resident: Resident in town.residents) {
+        for (resident: Resident in town.residents.all) {
             resident.setTown(town)
         }
 
@@ -48,8 +48,8 @@ class TownServiceImpl : TownService {
         this.townsById.remove(town.uniqueId)
         this.townsByName.remove(town.name)
 
-        for (resident: Resident in town.residents) {
-            town.removeResident(resident)
+        for (resident: Resident in town.residents.all) {
+            town.residents.remove(resident)
         }
 
         for (claim: Claim in town.claims) {

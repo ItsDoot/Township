@@ -23,6 +23,21 @@ public interface ResidentService {
     }
 
     /**
+     * Gets all registered residents, real or virtual.
+     *
+     * @return All registered residents
+     */
+    Collection<Resident> getResidents();
+
+    /**
+     * Gets a {@link Resident}, real or virtual, by their UUID.
+     *
+     * @param uniqueId The UUID to get the resident from
+     * @return The {@link Resident} or empty if not found
+     */
+    Optional<Resident> getResident(UUID uniqueId);
+
+    /**
      * Gets all registered user residents (residents backed by real players).
      *
      * @return All registered user residents.
