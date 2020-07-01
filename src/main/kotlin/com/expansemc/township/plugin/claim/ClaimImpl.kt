@@ -50,11 +50,10 @@ data class ClaimImpl(
         return this.rolePermissionOverrides.get(holder.uniqueId, permission).toTristate()
     }
 
-    override fun setPermissionOverride(holder: PermissionHolder, permission: Permission, value: Boolean): Boolean {
+    override fun setPermissionOverride(holder: PermissionHolder, permission: Permission, value: Boolean) {
         check(holder is TownRole) { "Only town roles can have claim overrides" }
         check(permission.type == PermissionTypes.CLAIM) { "Claim overrides only work with claim permissions" }
         this.rolePermissionOverrides.put(holder.uniqueId, permission, value)
-        return true
     }
 
     override fun removePermissionOverride(holder: PermissionHolder, permission: Permission): Boolean {

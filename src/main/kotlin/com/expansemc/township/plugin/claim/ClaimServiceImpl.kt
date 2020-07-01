@@ -24,11 +24,11 @@ class ClaimServiceImpl : ClaimService {
     override fun getClaimsByTown(town: Town): Collection<Claim> =
         this.claimTable.values().filter { it.town == town }
 
-    override fun contains(claim: Claim): Boolean =
+    override fun hasClaim(claim: Claim): Boolean =
         this.claimTable.contains(claim.world, claim.chunkPosition)
 
-    override fun register(claim: Claim): Boolean {
-        if (claim in this) {
+    override fun addClaim(claim: Claim): Boolean {
+        if (this.hasClaim(claim)) {
             return false
         }
 
@@ -36,8 +36,8 @@ class ClaimServiceImpl : ClaimService {
         return true
     }
 
-    override fun unregister(claim: Claim): Boolean {
-        if (claim !in this) {
+    override fun removeClaim(claim: Claim): Boolean {
+        if (!this.hasClaim(claim)) {
             return false
         }
 

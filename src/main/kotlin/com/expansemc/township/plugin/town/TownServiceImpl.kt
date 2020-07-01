@@ -22,10 +22,10 @@ class TownServiceImpl : TownService {
     override fun getTown(name: String): Optional<Town> =
         Optional.ofNullable(this.townsByName[name])
 
-    override fun contains(town: Town): Boolean =
+    override fun hasTown(town: Town): Boolean =
         town.uniqueId in this.townsById
 
-    override fun register(town: Town): Boolean {
+    override fun addTown(town: Town): Boolean {
         if (town.uniqueId in this.townsById) {
             return false
         }
@@ -40,7 +40,7 @@ class TownServiceImpl : TownService {
         return true
     }
 
-    override fun unregister(town: Town): Boolean {
+    override fun removeTown(town: Town): Boolean {
         if (town.uniqueId !in this.townsById) {
             return false
         }
@@ -53,7 +53,7 @@ class TownServiceImpl : TownService {
         }
 
         for (claim: Claim in town.claims) {
-            ClaimService.getInstance().unregister(claim)
+            ClaimService.getInstance().removeClaim(claim)
         }
 
         return true

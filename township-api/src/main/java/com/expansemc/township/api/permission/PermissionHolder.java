@@ -8,6 +8,8 @@ import java.util.Collection;
  * An object which holds Township permission data.
  *
  * <p>Note: These are not normal x.y.z permissions.</p>
+ *
+ * @see Permissions Known permissions
  */
 public interface PermissionHolder {
 
@@ -19,7 +21,7 @@ public interface PermissionHolder {
     Collection<Permission> getPermissions();
 
     /**
-     * Checks if this holder is granted the given permission.
+     * Checks if this holder is granted the provided permission.
      *
      * @param permission The permission to check
      * @return True if granted the permission
@@ -27,7 +29,7 @@ public interface PermissionHolder {
     boolean hasPermission(Permission permission);
 
     /**
-     * Adds the given permission to this holder.
+     * Adds the provided permission to this holder.
      *
      * @param permission The permission to add
      * @return True if the permission was granted successfully
@@ -35,7 +37,7 @@ public interface PermissionHolder {
     boolean addPermission(Permission permission);
 
     /**
-     * Removes the given permission from this holder.
+     * Removes the provided permission from this holder.
      *
      * @param permission The permission to remove
      * @return True if the permission was removed successfully
@@ -44,7 +46,7 @@ public interface PermissionHolder {
 
     /**
      * Gets the tristate value that represents whether this holder has the
-     * given permission, based on the given override holder.
+     * provided permission, based on the provided override holder.
      *
      * @param permission The permission to check
      * @param override The override holder to use
@@ -67,12 +69,12 @@ public interface PermissionHolder {
     }
 
     /**
-     * Checks whether this holder has the given permission, based on the given
-     * override holder.
+     * Checks whether this holder has the provided permission, based on the
+     * provided override holder.
      *
      * @param permission The permission to check
      * @param override The override holder to use
-     * @return True if this holder is granted permission
+     * @return True if this holder is granted permission, false otherwise
      */
     default boolean hasPermission(Permission permission, PermissionOverrideHolder override) {
         return getPermissionValue(permission, override).asBoolean();

@@ -14,14 +14,14 @@ import java.util.Optional;
 public interface Bank {
 
     /**
-     * Gets the {@link Account} associated with the bank, if available.
+     * Gets the {@link Account} associated with this bank.
      *
      * @return The associated account, if available
      */
     Optional<Account> getAccount();
 
     /**
-     * Gets the bank's current balance in the specified currency.
+     * Gets this bank's current balance in the specified currency.
      *
      * @param currency The currency to check
      * @return The current balance, or zero if no economy plugin is registered
@@ -33,7 +33,7 @@ public interface Bank {
     }
 
     /**
-     * Gets the bank's current balance in the default currency.
+     * Gets this bank's current balance in the default currency.
      *
      * @return The current balance, or zero if no economy plugin is registered
      */

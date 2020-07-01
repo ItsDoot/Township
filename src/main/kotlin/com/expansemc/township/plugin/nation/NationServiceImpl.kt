@@ -18,15 +18,15 @@ class NationServiceImpl : NationService {
         TODO("Not yet implemented")
     }
 
-    override fun contains(nation: Nation?): Boolean {
+    override fun hasNation(nation: Nation?): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun register(nation: Nation?): Boolean {
+    override fun addNation(nation: Nation?): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun unregister(nation: Nation?): Boolean {
+    override fun removeNation(nation: Nation?): Boolean {
         TODO("Not yet implemented")
     }
 }

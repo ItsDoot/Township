@@ -4,6 +4,9 @@ import com.expansemc.township.api.warp.Warp;
 
 import java.util.UUID;
 
+/**
+ * A named teleport location associated with a nation.
+ */
 public interface NationWarp extends Warp {
 
     /**
@@ -22,6 +25,12 @@ public interface NationWarp extends Warp {
 
     interface Builder extends Warp.Builder<NationWarp, Builder> {
 
+        /**
+         * Sets the associated nation of the role.
+         *
+         * @param nation The nation to use
+         * @return This builder, for chaining
+         */
         Builder nation(Nation nation);
     }
 }

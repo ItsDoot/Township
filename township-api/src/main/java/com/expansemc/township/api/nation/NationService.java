@@ -13,9 +13,9 @@ import java.util.UUID;
 public interface NationService {
 
     /**
-     * The singleton service instance.
+     * Gets the {@link NationService} instance.
      *
-     * @return The service instance
+     * @return The nation service instance
      */
     static NationService getInstance() {
         return TownshipAPI.getInstance().getNationService();
@@ -50,7 +50,7 @@ public interface NationService {
      * @param nation The nation to check
      * @return True if the nation has been registered
      */
-    boolean contains(Nation nation);
+    boolean hasNation(Nation nation);
 
     /**
      * Registers the specified nation to the service.
@@ -58,7 +58,7 @@ public interface NationService {
      * @param nation The nation to register
      * @return True if the nation was successfully registered
      */
-    boolean register(Nation nation);
+    boolean addNation(Nation nation);
 
     /**
      * Unregisters the specified nation from the service.
@@ -66,5 +66,5 @@ public interface NationService {
      * @param nation The nation to unregister
      * @return True if the nation was successfully unregistered
      */
-    boolean unregister(Nation nation);
+    boolean removeNation(Nation nation);
 }

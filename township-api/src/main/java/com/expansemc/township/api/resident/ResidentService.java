@@ -13,6 +13,11 @@ import java.util.UUID;
  */
 public interface ResidentService {
 
+    /**
+     * The {@link ResidentService} instance.
+     *
+     * @return The resident service instance
+     */
     static ResidentService getInstance() {
         return TownshipAPI.getInstance().getResidentService();
     }

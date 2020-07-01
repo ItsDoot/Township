@@ -30,7 +30,7 @@ public interface Nation extends Identifiable, Nameable, ResidentCollection, Role
     }
 
     /**
-     * Gets the name of the nation.
+     * Gets the name of this nation.
      *
      * @return The name
      */
@@ -38,7 +38,7 @@ public interface Nation extends Identifiable, Nameable, ResidentCollection, Role
     String getName();
 
     /**
-     * Sets the name of the nation.
+     * Sets the name of this nation.
      *
      * @param name The name to set
      * @return True if the action was successful
@@ -46,9 +46,9 @@ public interface Nation extends Identifiable, Nameable, ResidentCollection, Role
     boolean setName(String name);
 
     /**
-     * Checks if the nation is joinable without an invitation.
+     * Checks if this nation is joinable without an invitation.
      *
-     * @return True if the nation is joinable without an invite
+     * @return True if this nation is joinable without an invite
      */
     boolean isOpen();
 
@@ -61,18 +61,23 @@ public interface Nation extends Identifiable, Nameable, ResidentCollection, Role
     boolean setOpen(boolean open);
 
     /**
-     * Gets the owner of the nation.
+     * Gets the owner of this nation.
      *
-     * @return The owner of the nation
+     * @return The owner of this nation
      */
     Town getOwner();
 
+    /**
+     * Gets the resident that owns this nation.
+     * 
+     * @return The resident owner of this nation
+     */
     default Resident getOwnerResident() {
         return this.getOwner().getOwner();
     }
 
     /**
-     * Checks if the specified town is the owner of the nation.
+     * Checks if the specified town is the owner of this nation.
      *
      * @param town The town to check
      * @return True if the town is the owner
@@ -88,14 +93,14 @@ public interface Nation extends Identifiable, Nameable, ResidentCollection, Role
     boolean setOwner(Town town);
 
     /**
-     * Gets all towns in the nation.
+     * Gets all towns in this nation.
      *
-     * @return All towns in the nation
+     * @return All towns in this nation
      */
     Collection<Town> getTowns();
 
     /**
-     * Checks if the specified town is a member of the nation.
+     * Checks if the specified town is a member of this nation.
      *
      * @param town The town to check
      * @return True if the town is a member
@@ -103,7 +108,7 @@ public interface Nation extends Identifiable, Nameable, ResidentCollection, Role
     boolean hasTown(Town town);
 
     /**
-     * Adds the specified town as a member of the nation.
+     * Adds the specified town as a member of this nation.
      *
      * @param town The town to add
      * @return True if the action was successful
@@ -111,7 +116,7 @@ public interface Nation extends Identifiable, Nameable, ResidentCollection, Role
     boolean addTown(Town town);
 
     /**
-     * Removes the specified town as a member of the nation.
+     * Removes the specified town as a member of this nation.
      *
      * @param town The town to remove
      * @return True if the action was successful

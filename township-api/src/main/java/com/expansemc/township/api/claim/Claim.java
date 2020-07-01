@@ -46,14 +46,46 @@ public interface Claim extends PermissionOverrideHolder {
 
     interface Builder extends ResettableBuilder<Claim, Builder> {
 
+        /**
+         * Sets the world of the claim.
+         *
+         * @param world The world to use
+         * @return This builder, for chaining
+         */
         Builder world(ServerWorld world);
 
+        /**
+         * Sets the chunk position of the claim.
+         *
+         * @param chunkPosition The chunk position to use
+         * @return This builder, for chaining
+         */
         Builder chunkPosition(Vector3i chunkPosition);
 
+        /**
+         * Sets the owning town of the claim.
+         *
+         * @param town The town to use
+         * @return This builder, for chaining
+         */
         Builder town(Town town);
 
+        /**
+         * Adds a permission override to the claim.
+         *
+         * @param holder The holder to override for
+         * @param permission The permission to override
+         * @param value The overridden value
+         * @return This builder, for chaining
+         */
         Builder addPermissionOverride(PermissionHolder holder, Permission permission, boolean value);
 
+        /**
+         * Builds the claim.
+         *
+         * @return The built claim
+         * @throws IllegalStateException If not all required options were specified
+         */
         Claim build();
     }
 }

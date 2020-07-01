@@ -14,9 +14,9 @@ import java.util.UUID;
 public interface TownService {
 
     /**
-     * The singleton service instance.
+     * The {@link TownService} instance.
      *
-     * @return The service instance
+     * @return The town service instance
      */
     static TownService getInstance() {
         return TownshipAPI.getInstance().getTownService();
@@ -51,7 +51,7 @@ public interface TownService {
      * @param town The town to check
      * @return True if the town has been registered
      */
-    boolean contains(Town town);
+    boolean hasTown(Town town);
 
     /**
      * Registers the specified town to the service.
@@ -59,7 +59,7 @@ public interface TownService {
      * @param town The town to register
      * @return True if the town was successfully registered
      */
-    boolean register(Town town);
+    boolean addTown(Town town);
 
     /**
      * Unregisters the specified town from the service.
@@ -67,5 +67,5 @@ public interface TownService {
      * @param town The town to unregister
      * @return True if the town was successfully unregistered
      */
-    boolean unregister(Town town);
+    boolean removeTown(Town town);
 }

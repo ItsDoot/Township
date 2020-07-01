@@ -41,6 +41,6 @@ public interface NationRole extends Role {
          * @param nation The nation to set
          * @return This builder, for chaining
          */
-        Builder town(Nation nation);
+        Builder nation(Nation nation);
     }
 }

@@ -1,10 +1,12 @@
 package com.expansemc.township.api.permission;
 
-import org.spongepowered.api.data.persistence.DataSerializable;
 import org.spongepowered.api.util.Identifiable;
 import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
 
+/**
+ * A named permission holder, sorted by priority.
+ */
 public interface Role extends Identifiable, Nameable, PermissionHolder {
 
     /**
@@ -71,6 +73,12 @@ public interface Role extends Identifiable, Nameable, PermissionHolder {
          */
         B permissions(Permission... permissions);
 
+        /**
+         * Builds the {@link Role} of type {@link T}.
+         *
+         * @return The built role
+         * @throws IllegalStateException If not all required options were specified
+         */
         T build();
     }
 }

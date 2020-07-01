@@ -8,10 +8,15 @@ import com.expansemc.township.api.town.TownService;
 import org.spongepowered.api.Sponge;
 
 /**
- * The primary access point for accessing Township's API.
+ * The primary access point for Township's API.
  */
 public interface TownshipAPI {
 
+    /**
+     * Gets the {@link TownshipAPI} instance.
+     *
+     * @return The api instance
+     */
     static TownshipAPI getInstance() {
         return Sponge.getRegistry().getFactoryRegistry().provideFactory(TownshipAPI.class);
     }
