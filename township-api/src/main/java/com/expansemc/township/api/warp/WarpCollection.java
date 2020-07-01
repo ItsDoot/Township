@@ -2,6 +2,7 @@ package com.expansemc.township.api.warp;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * An object which manages warps of a certain type (town, nation, etc).
@@ -16,6 +17,15 @@ public interface WarpCollection<W extends Warp> {
      * @return All registered warps
      */
     Collection<W> getWarps();
+
+    /**
+     * Gets the warp with the specified {@link UUID} that's registered to this
+     * collection, if available.
+     *
+     * @param uniqueId The unique id to find
+     * @return The warp, if available
+     */
+    Optional<W> getWarp(UUID uniqueId);
 
     /**
      * Gets the warp with the specified name that's registered to this

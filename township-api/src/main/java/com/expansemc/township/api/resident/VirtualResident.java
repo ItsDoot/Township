@@ -6,6 +6,8 @@ import java.util.Optional;
 
 public interface VirtualResident extends Resident {
 
+    void setName(String name);
+
     @Override
     Optional<? extends Account> getAccount();
 }

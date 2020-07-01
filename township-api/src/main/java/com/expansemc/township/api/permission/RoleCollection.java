@@ -2,6 +2,7 @@ package com.expansemc.township.api.permission;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * An object which manages roles of a certain type (town, nation, etc).
@@ -25,7 +26,16 @@ public interface RoleCollection<R extends Role> {
     Collection<R> getRoles();
 
     /**
-     * Gets the role with the specified name that's registered to thi
+     * Gets the role with the specified {@link UUID} that's registered to this
+     * collection, if available.
+     *
+     * @param uniqueId The unique id to find
+     * @return The role, if available
+     */
+    Optional<R> getRole(UUID uniqueId);
+
+    /**
+     * Gets the role with the specified name that's registered to this
      * collection, if available.
      *
      * @param name The name to find
