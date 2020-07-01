@@ -16,8 +16,8 @@ import com.expansemc.township.plugin.permission.PermissionTypeImpl
 import com.expansemc.township.plugin.resident.ResidentServiceImpl
 import com.expansemc.township.plugin.town.TownServiceImpl
 import com.google.common.reflect.TypeToken
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import org.spongepowered.api.CatalogKey
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.data.Key
@@ -32,7 +32,7 @@ import java.util.*
 
 @Plugin("township")
 class Township {
-    private val logger: Logger = LoggerFactory.getLogger("township")
+    private val logger: Logger = LogManager.getLogger("township")
 
     private lateinit var container: PluginContainer
 
