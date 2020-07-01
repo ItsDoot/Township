@@ -51,6 +51,10 @@ data class TownImpl(
     override fun getResidents(): Collection<Resident> =
         this.residents.mapNotNull { ResidentService.getInstance().getUserResident(it).unwrap() }
 
+    override fun getResident(uniqueId: UUID?): Optional<Resident> {
+        TODO("Not yet implemented")
+    }
+
     override fun containsResident(resident: Resident): Boolean =
         resident.uniqueId in this.residents
 
@@ -67,6 +71,10 @@ data class TownImpl(
             .flatMap { it.getOrCreateAccount("town-$uniqueId") }
 
     override fun getRoles(): MutableCollection<TownRole> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getRole(uniqueId: UUID?): Optional<TownRole> {
         TODO("Not yet implemented")
     }
 
@@ -87,6 +95,10 @@ data class TownImpl(
     }
 
     override fun getWarps(): MutableCollection<TownWarp> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWarp(uniqueId: UUID?): Optional<TownWarp> {
         TODO("Not yet implemented")
     }
 
