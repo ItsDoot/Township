@@ -6,6 +6,9 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * An object which manages residents of a town, nation, etc.
+ */
 public interface ResidentCollection extends MessageReceiver {
 
     /**

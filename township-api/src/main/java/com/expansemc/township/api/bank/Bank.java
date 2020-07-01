@@ -8,6 +8,9 @@ import org.spongepowered.api.service.economy.account.Account;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+/**
+ * An economy account tied to a town, nation, etc.
+ */
 public interface Bank {
 
     /**

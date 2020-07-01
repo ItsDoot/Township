@@ -4,6 +4,9 @@ import org.spongepowered.api.Sponge;
 
 import java.util.function.Supplier;
 
+/**
+ * An enumeration of known {@link PermissionType}s used throughout the plugin.
+ */
 public final class PermissionTypes {
 
     public static final Supplier<PermissionType> CLAIM =

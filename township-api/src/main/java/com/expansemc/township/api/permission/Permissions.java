@@ -4,6 +4,9 @@ import org.spongepowered.api.Sponge;
 
 import java.util.function.Supplier;
 
+/**
+ * An enumeration of known {@link Permission}s used throughout the plugin.
+ */
 public final class Permissions {
 
     /**

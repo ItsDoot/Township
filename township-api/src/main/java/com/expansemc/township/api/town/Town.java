@@ -9,18 +9,25 @@ import com.expansemc.township.api.resident.ResidentCollection;
 import com.expansemc.township.api.warp.WarpCollection;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.util.Identifiable;
+import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.ServerLocation;
 
 import java.util.Collection;
 import java.util.Optional;
 
-public interface Town extends Identifiable, ResidentCollection, RoleCollection<TownRole>, WarpCollection<TownWarp>, Bank {
+public interface Town extends Identifiable, Nameable, ResidentCollection, RoleCollection<TownRole>, WarpCollection<TownWarp>, Bank {
 
     static Builder builder() {
         return Sponge.getRegistry().getBuilderRegistry().provideBuilder(Town.Builder.class);
     }
 
+    /**
+     * Gets the name of the town.
+     *
+     * @return The name
+     */
+    @Override
     String getName();
 
     void setName(String name);

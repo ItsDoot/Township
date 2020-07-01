@@ -11,13 +11,14 @@ import org.spongepowered.api.service.economy.Currency;
 import org.spongepowered.api.service.economy.account.Account;
 import org.spongepowered.api.text.channel.MessageReceiver;
 import org.spongepowered.api.util.Identifiable;
+import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface Nation extends Identifiable, ResidentCollection, RoleCollection<NationRole>, WarpCollection<NationWarp>, Bank {
+public interface Nation extends Identifiable, Nameable, ResidentCollection, RoleCollection<NationRole>, WarpCollection<NationWarp>, Bank {
 
     /**
      * Creates a new {@link Builder} to build a {@link Nation}.
@@ -31,8 +32,9 @@ public interface Nation extends Identifiable, ResidentCollection, RoleCollection
     /**
      * Gets the name of the nation.
      *
-     * @return The name of the nation
+     * @return The name
      */
+    @Override
     String getName();
 
     /**

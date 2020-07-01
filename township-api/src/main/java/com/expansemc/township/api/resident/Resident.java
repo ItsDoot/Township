@@ -6,14 +6,16 @@ import com.expansemc.township.api.town.TownRole;
 import org.spongepowered.api.service.economy.account.Account;
 import org.spongepowered.api.text.channel.MessageReceiver;
 import org.spongepowered.api.util.Identifiable;
+import org.spongepowered.api.util.Nameable;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface Resident extends Identifiable, MessageReceiver, PermissionHolder {
-
-    String getName();
+/**
+ * A member of a town.
+ */
+public interface Resident extends Identifiable, Nameable, MessageReceiver, PermissionHolder {
 
     Optional<Town> getTown();
 

@@ -7,8 +7,22 @@ import org.spongepowered.api.service.economy.account.UniqueAccount;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
+/**
+ * A member of a town, backed by a real player.
+ */
 public interface UserResident extends Resident {
+
+    @Override
+    default String getName() {
+        return this.getUser().getName();
+    }
+
+    @Override
+    default UUID getUniqueId() {
+        return this.getUser().getUniqueId();
+    }
 
     User getUser();
 

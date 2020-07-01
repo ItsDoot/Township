@@ -1,25 +1,27 @@
 package com.expansemc.township.api.warp;
 
 import org.spongepowered.api.util.Identifiable;
+import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.ServerLocation;
 
 /**
  * A named teleport location.
  */
-public interface Warp extends Identifiable {
+public interface Warp extends Identifiable, Nameable {
 
     /**
      * Gets the name of the warp.
      *
-     * @return The name of the warp
+     * @return The name
      */
+    @Override
     String getName();
 
     /**
      * Sets the name of the warp.
      *
-     * @param name The name of the warp
+     * @param name The new name
      */
     void setName(String name);
 
@@ -33,7 +35,7 @@ public interface Warp extends Identifiable {
     /**
      * Sets the location where players are warped to.
      *
-     * @param location The warp location
+     * @param location The new warp location
      */
     void setLocation(ServerLocation location);
 

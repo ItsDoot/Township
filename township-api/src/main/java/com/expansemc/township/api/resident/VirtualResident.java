@@ -1,13 +1,14 @@
 package com.expansemc.township.api.resident;
 
-import org.spongepowered.api.service.economy.account.Account;
-
-import java.util.Optional;
-
+/**
+ * A member of a town with no player backing. Useful for NPC towns.
+ */
 public interface VirtualResident extends Resident {
 
+    /**
+     * Sets the name that represents this resident.
+     *
+     * @param name The new name to use
+     */
     void setName(String name);
-
-    @Override
-    Optional<? extends Account> getAccount();
 }

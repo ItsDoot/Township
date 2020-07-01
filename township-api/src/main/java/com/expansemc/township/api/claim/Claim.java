@@ -11,14 +11,37 @@ import org.spongepowered.math.vector.Vector3i;
 
 import java.util.UUID;
 
+/**
+ * A chunk owned by a town.
+ */
 public interface Claim extends PermissionOverrideHolder {
 
+    /**
+     * Gets the {@link UUID} of the world this chunk is claimed in.
+     *
+     * @return The world UUID
+     */
     UUID getWorldId();
 
+    /**
+     * Gets the world this chunk is claimed in.
+     *
+     * @return The world
+     */
     ServerWorld getWorld();
 
+    /**
+     * Gets the chunk position (player-x / 16, 0, player-z / 16) this chunk is claimed at.
+     *
+     * @return The chunk position
+     */
     Vector3i getChunkPosition();
 
+    /**
+     * Gets the town that owns this chunk.
+     *
+     * @return The town
+     */
     Town getTown();
 
     interface Builder extends ResettableBuilder<Claim, Builder> {
