@@ -1,13 +1,12 @@
 package com.expansemc.township.api.permission;
 
-import org.spongepowered.api.util.Identifiable;
-import org.spongepowered.api.util.Nameable;
+import com.expansemc.township.api.util.NamedIdentifiable;
 import org.spongepowered.api.util.ResettableBuilder;
 
 /**
  * A named permission holder, sorted by priority.
  */
-public interface Role extends Identifiable, Nameable, PermissionHolder {
+public interface Role extends NamedIdentifiable, PermissionHolder {
 
     /**
      * Gets the name of the role.

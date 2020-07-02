@@ -1,17 +1,15 @@
 package com.expansemc.township.plugin.resident
 
+import com.expansemc.township.api.TownshipAPI
 import com.expansemc.township.api.nation.NationRole
 import com.expansemc.township.api.permission.Permission
-import com.expansemc.township.api.permission.RoleRegistry
-import com.expansemc.township.api.resident.ResidentRegistry
-import com.expansemc.township.api.resident.ResidentService
+import com.expansemc.township.api.registry.type.RoleRegistry
+import com.expansemc.township.api.registry.type.ResidentRegistry
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.town.Town
 import com.expansemc.township.api.town.TownRole
-import com.expansemc.township.api.town.TownService
 import com.expansemc.township.plugin.data.TownshipKeys
 import com.expansemc.township.plugin.util.getSetOrEmpty
-import com.expansemc.township.plugin.util.unwrap
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.entity.living.player.User
 import org.spongepowered.api.profile.GameProfile
@@ -58,7 +56,7 @@ data class UserResidentImpl(private val uniqueId: UUID) : UserResident {
 
     override fun getTown(): Optional<Town> =
         this.user.get(TownshipKeys.TOWN)
-        .flatMap { TownService.getInstance().getTown(it) }
+            .flatMap(TownshipAPI.getInstance().townRegistry::get)
 
     override fun hasTown(): Boolean =
         this.user.get(TownshipKeys.TOWN).isPresent

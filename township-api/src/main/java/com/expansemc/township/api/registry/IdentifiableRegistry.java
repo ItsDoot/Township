@@ -1,4 +1,4 @@
-package com.expansemc.township.api.util.registry;
+package com.expansemc.township.api.registry;
 
 import org.spongepowered.api.util.Identifiable;
 
@@ -12,8 +12,7 @@ import java.util.UUID;
  *
  * @param <E> The element type
  */
-public interface IdentifiableRegistry<E extends Identifiable>
-        extends Registry<E> {
+public interface IdentifiableRegistry<E extends Identifiable> extends Registry<E> {
 
     /**
      * Gets the element with the specified {@link UUID} that is a member of
@@ -24,7 +23,6 @@ public interface IdentifiableRegistry<E extends Identifiable>
      */
     Optional<E> get(UUID uniqueId);
 
-    interface Mutable<E extends Identifiable>
-            extends IdentifiableRegistry<E>, Registry.Mutable<E> {
+    interface Mutable<E extends Identifiable> extends IdentifiableRegistry<E>, Registry.Mutable<E> {
     }
 }

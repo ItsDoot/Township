@@ -1,14 +1,19 @@
 package com.expansemc.township.plugin.claim
 
+import com.expansemc.township.api.TownshipAPI
 import com.expansemc.township.api.claim.Claim
+import com.expansemc.township.api.nation.NationWarp
 import com.expansemc.township.api.permission.Permission
 import com.expansemc.township.api.permission.PermissionHolder
 import com.expansemc.township.api.permission.PermissionTypes
-import com.expansemc.township.api.permission.Role
+import com.expansemc.township.api.registry.type.WarpRegistry
 import com.expansemc.township.api.town.Town
 import com.expansemc.township.api.town.TownRole
-import com.expansemc.township.api.town.TownService
+import com.expansemc.township.api.town.TownWarp
+import com.expansemc.township.plugin.registry.emptyRegistry
+import com.expansemc.township.plugin.registry.view.ClaimWarpRegistryView
 import com.expansemc.township.plugin.util.toTristate
+import com.expansemc.township.plugin.util.unwrap
 import com.google.common.collect.Table
 import com.google.common.collect.Tables
 import org.spongepowered.api.Sponge
@@ -36,7 +41,7 @@ data class ClaimImpl(
         this.chunkPosition
 
     override fun getTown(): Town =
-        TownService.getInstance().getTown(this.townId)
+        TownshipAPI.getInstance().townRegistry[this.townId]
             .orElseThrow { IllegalStateException("Town $townId is not loaded!") }
 
     override fun getPermissionOverrides(holder: PermissionHolder): Map<Permission, Boolean> {
@@ -61,4 +66,12 @@ data class ClaimImpl(
         check(permission.type == PermissionTypes.CLAIM) { "Claim overrides only work with claim permissions" }
         return this.rolePermissionOverrides.remove(holder.uniqueId, permission) != null
     }
+
+    override fun getTownWarpRegistry(): WarpRegistry<TownWarp> =
+        ClaimWarpRegistryView<TownWarp>(this, this.town.warpRegistry)
+
+    override fun getNationWarpRegistry(): WarpRegistry<NationWarp> =
+        this.town.nation.unwrap()
+            ?.let { ClaimWarpRegistryView<NationWarp>(this, it.warpRegistry) }
+            ?: emptyRegistry()
 }

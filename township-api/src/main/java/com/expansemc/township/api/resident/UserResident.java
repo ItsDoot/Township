@@ -1,7 +1,8 @@
 package com.expansemc.township.api.resident;
 
-import com.expansemc.township.api.claim.ClaimService;
+import com.expansemc.township.api.TownshipAPI;
 import com.expansemc.township.api.permission.Permission;
+import com.expansemc.township.api.registry.type.ResidentRegistry;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.User;
 import org.spongepowered.api.service.economy.EconomyService;
@@ -59,7 +60,7 @@ public interface UserResident extends Resident {
      */
     default Tristate getPermissionValueHere(Permission permission) {
         return this.getUser().getPlayer()
-                .flatMap(player -> ClaimService.getInstance().getClaimAt(player.getServerLocation()))
+                .flatMap(player -> TownshipAPI.getInstance().getClaimRegistry().get(player.getServerLocation()))
                 .map(claim -> this.getPermissionValue(permission, claim))
                 .orElse(Tristate.UNDEFINED);
     }

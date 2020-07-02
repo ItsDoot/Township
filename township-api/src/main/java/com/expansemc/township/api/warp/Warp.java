@@ -1,14 +1,13 @@
 package com.expansemc.township.api.warp;
 
-import org.spongepowered.api.util.Identifiable;
-import org.spongepowered.api.util.Nameable;
+import com.expansemc.township.api.util.NamedIdentifiable;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.ServerLocation;
 
 /**
  * A named teleport location.
  */
-public interface Warp extends Identifiable, Nameable {
+public interface Warp extends NamedIdentifiable {
 
     /**
      * Gets the name of this warp.

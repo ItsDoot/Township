@@ -1,29 +1,26 @@
 package com.expansemc.township.api.town;
 
 import com.expansemc.township.api.bank.Bank;
-import com.expansemc.township.api.claim.Claim;
-import com.expansemc.township.api.claim.ClaimService;
+import com.expansemc.township.api.registry.type.ClaimRegistry;
 import com.expansemc.township.api.nation.Nation;
-import com.expansemc.township.api.permission.RoleRegistry;
+import com.expansemc.township.api.registry.type.RoleRegistry;
+import com.expansemc.township.api.registry.central.CentralClaimRegistry;
 import com.expansemc.township.api.resident.Resident;
-import com.expansemc.township.api.resident.ResidentRegistry;
+import com.expansemc.township.api.registry.type.ResidentRegistry;
+import com.expansemc.township.api.util.NamedIdentifiable;
 import com.expansemc.township.api.util.OwnedBy;
-import com.expansemc.township.api.warp.WarpRegistry;
+import com.expansemc.township.api.registry.type.WarpRegistry;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.channel.MessageReceiver;
-import org.spongepowered.api.util.Identifiable;
-import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
-import org.spongepowered.api.world.ServerLocation;
 
-import java.util.Collection;
 import java.util.Optional;
 
 /**
- * A named group of a bank, residents, roles, warps, and claims.
+ * Represents a named grouping of a bank, residents, roles, warps, and claims.
  */
-public interface Town extends Identifiable, Nameable, MessageReceiver, OwnedBy<Resident>, Bank {
+public interface Town extends NamedIdentifiable, MessageReceiver, OwnedBy<Resident>, Bank {
 
     /**
      * Creates a new {@link Builder} to build a {@link Town}.
@@ -88,11 +85,35 @@ public interface Town extends Identifiable, Nameable, MessageReceiver, OwnedBy<R
     @Override
     void setOwner(Resident resident);
 
-    ResidentRegistry.Mutable getResidents();
+    /**
+     * Gets the registry used for managing this town's residents.
+     *
+     * @return The resident registry
+     */
+    ResidentRegistry.Mutable getResidentRegistry();
 
-    RoleRegistry.Mutable<TownRole> getRoles();
+    /**
+     * Gets a read-only view into this town's claim registry.
+     *
+     * <p>Creating and deleting claims should be done on the {@link CentralClaimRegistry}.</p>
+     *
+     * @return The read-only claim registry view
+     */
+    ClaimRegistry getClaimRegistry();
 
-    WarpRegistry.Mutable<TownWarp> getWarps();
+    /**
+     * Gets the registry used for managing this town's roles.
+     *
+     * @return The role registry
+     */
+    RoleRegistry.Mutable<TownRole> getRoleRegistry();
+
+    /**
+     * Gets the registry used for managing this town's warps.
+     *
+     * @return The warp registry
+     */
+    WarpRegistry.Mutable<TownWarp> getWarpRegistry();
 
     /**
      * Gets the nation this town is part of.
@@ -102,6 +123,13 @@ public interface Town extends Identifiable, Nameable, MessageReceiver, OwnedBy<R
     Optional<Nation> getNation();
 
     /**
+     * Checks if this town is part of a nation.
+     *
+     * @return True if part of a nation, false otherwise
+     */
+    boolean hasNation();
+
+    /**
      * Sets the nation this town is part of.
      *
      * @param nation The town's new nation, or null to leave the nation
@@ -109,24 +137,8 @@ public interface Town extends Identifiable, Nameable, MessageReceiver, OwnedBy<R
     void setNation(@Nullable Nation nation);
 
     /**
-     * Gets all claims owned by this town.
-     *
-     * @return All owned claims
+     * Represents a builder to create {@link Town}s.
      */
-    default Collection<Claim> getClaims() {
-        return ClaimService.getInstance().getClaimsByTown(this);
-    }
-
-    /**
-     * Gets the claim owned by this town at the provided location.
-     *
-     * @param location The location to get the claim from
-     * @return The owned claim or empty if not found
-     */
-    default Optional<Claim> getClaimAt(ServerLocation location) {
-        return ClaimService.getInstance().getClaimAt(location).filter(claim -> claim.getTown().equals(this));
-    }
-
     interface Builder extends ResettableBuilder<Town, Builder> {
 
         /**

@@ -1,7 +1,8 @@
-package com.expansemc.township.api.warp;
+package com.expansemc.township.api.registry.type;
 
-import com.expansemc.township.api.util.registry.Registry;
-import com.expansemc.township.api.util.registry.NamedIdentifiableRegistry;
+import com.expansemc.township.api.registry.NamedIdentifiableRegistry;
+import com.expansemc.township.api.registry.Registry;
+import com.expansemc.township.api.warp.Warp;
 
 /**
  * An object which manages warps of a certain type (town, nation, etc).

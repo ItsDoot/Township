@@ -1,21 +1,22 @@
 package com.expansemc.township.api.nation;
 
 import com.expansemc.township.api.bank.Bank;
-import com.expansemc.township.api.permission.RoleRegistry;
+import com.expansemc.township.api.registry.type.RoleRegistry;
 import com.expansemc.township.api.resident.Resident;
-import com.expansemc.township.api.resident.ResidentRegistry;
+import com.expansemc.township.api.registry.type.ResidentRegistry;
 import com.expansemc.township.api.town.Town;
-import com.expansemc.township.api.town.TownRegistry;
+import com.expansemc.township.api.registry.type.TownRegistry;
+import com.expansemc.township.api.util.NamedIdentifiable;
 import com.expansemc.township.api.util.OwnedBy;
-import com.expansemc.township.api.warp.WarpRegistry;
+import com.expansemc.township.api.registry.type.WarpRegistry;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.channel.MessageReceiver;
-import org.spongepowered.api.util.Identifiable;
-import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
 
-public interface Nation
-        extends Identifiable, Nameable, MessageReceiver, OwnedBy<Town>, Bank {
+/**
+ * Represents a named grouping of a bank, towns, roles, and warps.
+ */
+public interface Nation extends NamedIdentifiable, MessageReceiver, OwnedBy<Town>, Bank {
 
     /**
      * Creates a new {@link Builder} to build a {@link Nation}.
@@ -44,14 +45,14 @@ public interface Nation
     /**
      * Checks if this nation is joinable without an invitation.
      *
-     * @return True if this nation is joinable without an invite
+     * @return True if this nation is joinable without invite, false otherwise
      */
     boolean isOpen();
 
     /**
      * Sets whether the town is joinable without an invitation.
      *
-     * @param open True if joinable without an invite
+     * @param open True if joinable without an invite, false otherwise
      */
     void setOpen(boolean open);
 
@@ -76,7 +77,7 @@ public interface Nation
      * Checks if the specified town is the owner of this nation.
      *
      * @param town The town to check
-     * @return True if the town is the owner
+     * @return True if the town is the owner, false otherwise
      */
     @Override
     boolean isOwner(Town town);
@@ -90,14 +91,37 @@ public interface Nation
     @Override
     void setOwner(Town town);
 
-    TownRegistry.Mutable getTowns();
+    /**
+     * Gets the registry used for managing this nation's towns.
+     *
+     * @return The town registry
+     */
+    TownRegistry.Mutable getTownRegistry();
 
-    ResidentRegistry getResidents();
+    /**
+     * Gets a read-only view into the residents in this nation's towns.
+     *
+     * @return The read-only resident registry view
+     */
+    ResidentRegistry getResidentRegistry();
 
-    RoleRegistry.Mutable<NationRole> getRoles();
+    /**
+     * Gets the registry used for managing this nation's roles.
+     *
+     * @return The role registry
+     */
+    RoleRegistry.Mutable<NationRole> getRoleRegistry();
 
-    WarpRegistry.Mutable<NationWarp> getWarps();
+    /**
+     * Gets the registry used for managing this nation's warps.
+     *
+     * @return The warp registry
+     */
+    WarpRegistry.Mutable<NationWarp> getWarpRegistry();
 
+    /**
+     * Represents a builder to create {@link Nation}s.
+     */
     interface Builder extends ResettableBuilder<Nation, Builder> {
 
         Builder name(String name);

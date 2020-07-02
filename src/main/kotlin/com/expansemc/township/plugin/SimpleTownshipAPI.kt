@@ -1,26 +1,26 @@
 package com.expansemc.township.plugin
 
 import com.expansemc.township.api.TownshipAPI
-import com.expansemc.township.api.claim.ClaimService
-import com.expansemc.township.api.nation.NationService
+import com.expansemc.township.api.registry.central.CentralClaimRegistry
+import com.expansemc.township.api.registry.central.CentralNationRegistry
 import com.expansemc.township.api.permission.WildernessRole
-import com.expansemc.township.api.resident.ResidentService
-import com.expansemc.township.api.town.TownService
+import com.expansemc.township.api.registry.central.CentralResidentRegistry
+import com.expansemc.township.api.registry.central.CentralTownRegistry
 
 data class SimpleTownshipAPI(
-    private val residentService: ResidentService,
-    private val claimService: ClaimService,
-    private val townService: TownService,
-    private val nationService: NationService
+    private val residentRegistry: CentralResidentRegistry,
+    private val claimRegistry: CentralClaimRegistry,
+    private val townRegistry: CentralTownRegistry,
+    private val nationRegistry: CentralNationRegistry
 ) : TownshipAPI {
 
     override fun getWildernessRole(): WildernessRole = TODO()
 
-    override fun getResidentService(): ResidentService = this.residentService
+    override fun getResidentRegistry(): CentralResidentRegistry = this.residentRegistry
 
-    override fun getClaimService(): ClaimService = this.claimService
+    override fun getClaimRegistry(): CentralClaimRegistry = this.claimRegistry
 
-    override fun getTownService(): TownService = this.townService
+    override fun getTownRegistry(): CentralTownRegistry = this.townRegistry
 
-    override fun getNationService(): NationService = this.nationService
+    override fun getNationRegistry(): CentralNationRegistry = this.nationRegistry
 }

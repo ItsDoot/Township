@@ -1,16 +1,23 @@
 package com.expansemc.township.plugin.town
 
+import com.expansemc.township.api.TownshipAPI
+import com.expansemc.township.api.registry.type.ClaimRegistry
 import com.expansemc.township.api.nation.Nation
-import com.expansemc.township.api.nation.NationService
-import com.expansemc.township.api.permission.RoleRegistry
+import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.resident.Resident
-import com.expansemc.township.api.resident.ResidentRegistry
-import com.expansemc.township.api.resident.ResidentService
+import com.expansemc.township.api.registry.type.ResidentRegistry
 import com.expansemc.township.api.town.Town
 import com.expansemc.township.api.town.TownRole
 import com.expansemc.township.api.town.TownWarp
-import com.expansemc.township.api.warp.WarpRegistry
+import com.expansemc.township.api.registry.type.WarpRegistry
+import com.expansemc.township.plugin.registry.view.TownClaimRegistryView
+import com.expansemc.township.plugin.registry.RoleRegistryImpl
+import com.expansemc.township.plugin.registry.ResidentRegistryImpl
+import com.expansemc.township.plugin.util.registry.RegistryMessageChannel
 import com.expansemc.township.plugin.util.wrap
+import com.expansemc.township.plugin.warp.SimpleWarpRegistry
+import org.spongepowered.api.Sponge
+import org.spongepowered.api.service.economy.EconomyService
 import org.spongepowered.api.service.economy.account.Account
 import org.spongepowered.api.text.Text
 import org.spongepowered.api.text.channel.MessageChannel
@@ -21,53 +28,70 @@ data class TownImpl(
     private var name: String,
     private var open: Boolean,
     private var ownerId: UUID,
-    private var nationId: UUID?
+    private var nationId: UUID?,
+    private val visitorRole: TownRole
 ) : Town {
+
+    private val residentRegistry = ResidentRegistryImpl()
+    private val roleRegistry = RoleRegistryImpl(this.visitorRole)
+    private val warpRegistry = SimpleWarpRegistry<TownWarp>()
+
+    private val messageChannel = RegistryMessageChannel(this.residentRegistry)
 
     override fun getUniqueId(): UUID = this.uniqueId
 
     override fun getName(): String = this.name
 
+    // TODO event
     override fun setName(name: String) {
         this.name = name
     }
 
     override fun isOpen(): Boolean = this.open
 
+    // TODO event
     override fun setOpen(open: Boolean) {
         this.open = open
     }
 
     override fun getOwner(): Resident =
-        ResidentService.getInstance().getUserResident(ownerId)
+        TownshipAPI.getInstance().residentRegistry[ownerId]
             .orElseThrow { IllegalStateException("Town $name has no name!") }
 
-    override fun isOwner(resident: Resident): Boolean = resident.uniqueId == this.ownerId
+    override fun isOwner(resident: Resident): Boolean =
+        resident.uniqueId == this.ownerId
 
+    // TODO event
     override fun setOwner(resident: Resident) {
         this.ownerId = resident.uniqueId
     }
 
     override fun getNation(): Optional<Nation> =
-        nationId.wrap().flatMap { NationService.getInstance().getNation(it) }
+        nationId.wrap().flatMap(TownshipAPI.getInstance().nationRegistry::get)
 
+    override fun hasNation(): Boolean = this.nationId != null
+
+    // TODO event
     override fun setNation(nation: Nation?) {
-        // TODO event
-
         this.nationId = nation?.uniqueId
     }
 
-    override fun getResidents(): ResidentRegistry.Mutable = TODO()
+    override fun getResidentRegistry(): ResidentRegistry.Mutable = this.residentRegistry
 
-    override fun getRoles(): RoleRegistry.Mutable<TownRole> = TODO()
+    override fun getClaimRegistry(): ClaimRegistry =
+        TownClaimRegistryView(TownshipAPI.getInstance().claimRegistry, this)
 
-    override fun getWarps(): WarpRegistry.Mutable<TownWarp> = TODO()
+    override fun getRoleRegistry(): RoleRegistry.Mutable<TownRole> = this.roleRegistry
 
-    override fun sendMessage(message: Text) = TODO()
+    override fun getWarpRegistry(): WarpRegistry.Mutable<TownWarp> = this.warpRegistry
 
-    override fun getMessageChannel(): MessageChannel = TODO()
+    override fun sendMessage(message: Text) = this.messageChannel.send(message)
 
-    override fun setMessageChannel(channel: MessageChannel?) = TODO()
+    override fun getMessageChannel(): MessageChannel = this.messageChannel
 
-    override fun getAccount(): Optional<Account> = TODO()
+    override fun setMessageChannel(channel: MessageChannel?) {}
+
+    override fun getAccount(): Optional<Account> =
+        Sponge.getServiceManager().provide(EconomyService::class.java)
+            .flatMap { it.getOrCreateAccount("town-$uniqueId") }
 }

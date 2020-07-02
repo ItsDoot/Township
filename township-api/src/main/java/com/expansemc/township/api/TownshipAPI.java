@@ -1,10 +1,10 @@
 package com.expansemc.township.api;
 
-import com.expansemc.township.api.claim.ClaimService;
-import com.expansemc.township.api.nation.NationService;
 import com.expansemc.township.api.permission.WildernessRole;
-import com.expansemc.township.api.resident.ResidentService;
-import com.expansemc.township.api.town.TownService;
+import com.expansemc.township.api.registry.central.CentralClaimRegistry;
+import com.expansemc.township.api.registry.central.CentralNationRegistry;
+import com.expansemc.township.api.registry.central.CentralResidentRegistry;
+import com.expansemc.township.api.registry.central.CentralTownRegistry;
 import org.spongepowered.api.Sponge;
 
 /**
@@ -29,30 +29,30 @@ public interface TownshipAPI {
     WildernessRole getWildernessRole();
 
     /**
-     * Gets the service used for managing residents.
+     * Gets the central registry for managing residents.
      *
-     * @return The resident service
+     * @return The central resident registry
      */
-    ResidentService getResidentService();
+    CentralResidentRegistry getResidentRegistry();
 
     /**
-     * Gets the service used for managing claims.
+     * Gets the central registry for managing claims.
      *
-     * @return The claim service
+     * @return The central claim registry
      */
-    ClaimService getClaimService();
+    CentralClaimRegistry getClaimRegistry();
 
     /**
-     * Gets the service used for managing towns.
+     * Gets the central registry used for managing towns.
      *
-     * @return The town service
+     * @return The central town registry
      */
-    TownService getTownService();
+    CentralTownRegistry getTownRegistry();
 
     /**
-     * Gets the service used for managing nations.
+     * Gets the central registry used for managing nations.
      *
-     * @return The nation service.
+     * @return The central nation registry
      */
-    NationService getNationService();
+    CentralNationRegistry getNationRegistry();
 }

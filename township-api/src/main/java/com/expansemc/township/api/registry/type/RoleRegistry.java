@@ -1,7 +1,8 @@
-package com.expansemc.township.api.permission;
+package com.expansemc.township.api.registry.type;
 
-import com.expansemc.township.api.util.registry.Registry;
-import com.expansemc.township.api.util.registry.NamedIdentifiableRegistry;
+import com.expansemc.township.api.permission.Role;
+import com.expansemc.township.api.registry.NamedIdentifiableRegistry;
+import com.expansemc.township.api.registry.Registry;
 
 /**
  * An object which manages roles of a certain type (town, nation, etc).

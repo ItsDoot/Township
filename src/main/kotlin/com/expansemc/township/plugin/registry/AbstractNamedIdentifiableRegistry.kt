@@ -1,15 +1,15 @@
-package com.expansemc.township.plugin.util.collection
+package com.expansemc.township.plugin.registry
 
-import com.expansemc.township.api.util.registry.NamedIdentifiableRegistry
+import com.expansemc.township.api.registry.NamedIdentifiableRegistry
 import org.spongepowered.api.util.Identifiable
 import org.spongepowered.api.util.Nameable
 import java.util.*
 
-open class SimpleNamedIdentifiableRegistry<E> : NamedIdentifiableRegistry.Mutable<E>
+abstract class AbstractNamedIdentifiableRegistry<E> : NamedIdentifiableRegistry.Mutable<E>
         where E : Identifiable, E : Nameable {
 
-    private val elementsById = HashMap<UUID, E>()
-    private val elementsByName = HashMap<String, E>()
+    protected val elementsById = HashMap<UUID, E>()
+    protected val elementsByName = HashMap<String, E>()
 
     override fun getAll(): Collection<E> =
         this.elementsById.values.toSet()

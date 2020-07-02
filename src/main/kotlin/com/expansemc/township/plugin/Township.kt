@@ -1,20 +1,20 @@
 package com.expansemc.township.plugin
 
 import com.expansemc.township.api.TownshipAPI
-import com.expansemc.township.api.claim.ClaimService
-import com.expansemc.township.api.nation.NationService
+import com.expansemc.township.api.registry.central.CentralClaimRegistry
+import com.expansemc.township.api.registry.central.CentralNationRegistry
 import com.expansemc.township.api.permission.Permission
 import com.expansemc.township.api.permission.PermissionType
-import com.expansemc.township.api.resident.ResidentService
-import com.expansemc.township.api.town.TownService
-import com.expansemc.township.plugin.claim.ClaimServiceImpl
+import com.expansemc.township.api.registry.central.CentralResidentRegistry
+import com.expansemc.township.api.registry.central.CentralTownRegistry
+import com.expansemc.township.plugin.registry.central.CentralClaimRegistryImpl
 import com.expansemc.township.plugin.listener.BlockListener
 import com.expansemc.township.plugin.listener.ConnectionListener
-import com.expansemc.township.plugin.nation.NationServiceImpl
 import com.expansemc.township.plugin.permission.PermissionImpl
 import com.expansemc.township.plugin.permission.PermissionTypeImpl
-import com.expansemc.township.plugin.resident.ResidentServiceImpl
-import com.expansemc.township.plugin.town.TownServiceImpl
+import com.expansemc.township.plugin.registry.central.CentralNationRegistryImpl
+import com.expansemc.township.plugin.registry.central.CentralResidentRegistryImpl
+import com.expansemc.township.plugin.registry.central.CentralTownRegistryImpl
 import com.google.common.reflect.TypeToken
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -36,10 +36,10 @@ class Township {
 
     private lateinit var container: PluginContainer
 
-    private lateinit var residentService: ResidentService
-    private lateinit var claimService: ClaimService
-    private lateinit var townService: TownService
-    private lateinit var nationService: NationService
+    private lateinit var residentRegistry: CentralResidentRegistry
+    private lateinit var claimRegistry: CentralClaimRegistry
+    private lateinit var townRegistry: CentralTownRegistry
+    private lateinit var nationRegistry: CentralNationRegistry
 
     @Listener
     fun onConstruct(event: ConstructPluginEvent) {
@@ -49,10 +49,10 @@ class Township {
 
         this.logger.info("Loading services...")
 
-        this.residentService = ResidentServiceImpl()
-        this.claimService = ClaimServiceImpl()
-        this.townService = TownServiceImpl()
-        this.nationService = NationServiceImpl()
+        this.residentRegistry = CentralResidentRegistryImpl()
+        this.claimRegistry = CentralClaimRegistryImpl()
+        this.townRegistry = CentralTownRegistryImpl()
+        this.nationRegistry = CentralNationRegistryImpl()
     }
 
     @Listener
@@ -62,10 +62,10 @@ class Township {
         this.logger.info("Registering TownshipAPI...")
 
         val api = SimpleTownshipAPI(
-            residentService,
-            claimService,
-            townService,
-            nationService
+            residentRegistry,
+            claimRegistry,
+            townRegistry,
+            nationRegistry
         )
 
         event.register(TownshipAPI::class.java, api)

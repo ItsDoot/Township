@@ -1,4 +1,4 @@
-package com.expansemc.township.api.util.registry;
+package com.expansemc.township.api.registry;
 
 import java.util.Collection;
 

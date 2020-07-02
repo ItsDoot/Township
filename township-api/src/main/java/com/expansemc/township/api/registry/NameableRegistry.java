@@ -1,4 +1,4 @@
-package com.expansemc.township.api.util.registry;
+package com.expansemc.township.api.registry;
 
 import org.spongepowered.api.util.Nameable;
 
@@ -9,8 +9,7 @@ import java.util.Optional;
  *
  * @param <E> The element type
  */
-public interface NameableRegistry<E extends Nameable>
-        extends Registry<E> {
+public interface NameableRegistry<E extends Nameable> extends Registry<E> {
 
     /**
      * Gets the element with the specified name that is a member of this
@@ -21,7 +20,6 @@ public interface NameableRegistry<E extends Nameable>
      */
     Optional<E> get(String name);
 
-    interface Mutable<E extends Nameable>
-            extends NameableRegistry<E>, Registry.Mutable<E> {
+    interface Mutable<E extends Nameable> extends NameableRegistry<E>, Registry.Mutable<E> {
     }
 }
