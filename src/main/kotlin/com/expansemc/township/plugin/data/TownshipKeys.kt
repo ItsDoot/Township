@@ -1,7 +1,6 @@
 package com.expansemc.township.plugin.data
 
 import com.expansemc.township.api.permission.Permission
-import com.expansemc.township.api.town.TownRole
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.data.Key
 import org.spongepowered.api.data.value.SetValue

@@ -1,13 +1,15 @@
 package com.expansemc.township.api.warp;
 
 import com.expansemc.township.api.util.NamedIdentifiable;
+import com.expansemc.township.api.util.OwnedBy;
+import org.spongepowered.api.util.Identifiable;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.world.ServerLocation;
 
 /**
  * A named teleport location.
  */
-public interface Warp extends NamedIdentifiable {
+public interface Warp<Owner extends Identifiable> extends NamedIdentifiable, OwnedBy<Owner> {
 
     /**
      * Gets the name of this warp.
@@ -37,31 +39,4 @@ public interface Warp extends NamedIdentifiable {
      * @param location The new warp location
      */
     void setLocation(ServerLocation location);
-
-    interface Builder<T extends Warp, B extends Builder<T, B>> extends ResettableBuilder<T, B> {
-
-        /**
-         * Sets the name of the warp.
-         *
-         * @param name The name to use
-         * @return This builder, for chaining
-         */
-        B name(String name);
-
-        /**
-         * Sets the location of the warp.
-         *
-         * @param location The location to use
-         * @return This builder, for chaining
-         */
-        B location(ServerLocation location);
-
-        /**
-         * Builds the {@link Warp} of type {@link T}.
-         *
-         * @return The built warp
-         * @throws IllegalStateException If not all required options were specified
-         */
-        T build();
-    }
 }

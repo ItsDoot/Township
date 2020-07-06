@@ -2,12 +2,19 @@ package com.expansemc.township.plugin.registry
 
 import com.expansemc.township.api.resident.Resident
 import com.expansemc.township.api.registry.type.ResidentRegistry
+import com.expansemc.township.api.resident.ResidentArchetype
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.resident.VirtualResident
 import com.expansemc.township.plugin.util.Constants.VIRTUAL_RESIDENT_NAME_PREFIX
 import java.util.*
 
-open class ResidentRegistryImpl : AbstractNamedIdentifiableRegistry<Resident>(), ResidentRegistry.Mutable {
+open class ResidentRegistryImpl :
+    AbstractNamedIdentifiableRegistry.Archetypal<Resident, ResidentArchetype>(),
+    ResidentRegistry.ArchetypeMutable {
+
+    override fun fromArchetype(archetype: ResidentArchetype): Resident {
+        TODO()
+    }
 
     override fun getAllUsers(): Collection<UserResident> =
         this.elementsById.values.filterIsInstance<UserResident>()

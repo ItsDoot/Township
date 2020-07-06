@@ -2,8 +2,6 @@ package com.expansemc.township.plugin.nation
 
 import com.expansemc.township.api.TownshipAPI
 import com.expansemc.township.api.nation.Nation
-import com.expansemc.township.api.nation.NationRole
-import com.expansemc.township.api.nation.NationWarp
 import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.registry.type.ResidentRegistry
 import com.expansemc.township.api.town.Town
@@ -60,14 +58,14 @@ data class NationImpl(
         this.ownerId = town.uniqueId
     }
 
-    override fun getTownRegistry(): TownRegistry.Mutable = this.townRegistry
+    override fun getTownRegistry(): TownRegistry.ArchetypeMutable = this.townRegistry
 
     override fun getResidentRegistry(): ResidentRegistry =
         NationResidentRegistryView(this)
 
-    override fun getRoleRegistry(): RoleRegistry.Mutable<NationRole> = this.roleRegistry
+    override fun getRoleRegistry(): RoleRegistry.ArchetypeMutable<NationRole> = this.roleRegistry
 
-    override fun getWarpRegistry(): WarpRegistry.Mutable<NationWarp> = this.warpRegistry
+    override fun getWarpRegistry(): WarpRegistry.ArchetypeMutable<NationWarp> = this.warpRegistry
 
     override fun sendMessage(message: Text) = this.messageChannel.send(message)
 

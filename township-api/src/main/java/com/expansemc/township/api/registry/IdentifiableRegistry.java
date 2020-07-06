@@ -1,5 +1,6 @@
 package com.expansemc.township.api.registry;
 
+import com.expansemc.township.api.util.Archetype;
 import org.spongepowered.api.util.Identifiable;
 
 import java.util.Optional;
@@ -23,6 +24,13 @@ public interface IdentifiableRegistry<E extends Identifiable> extends Registry<E
      */
     Optional<E> get(UUID uniqueId);
 
-    interface Mutable<E extends Identifiable> extends IdentifiableRegistry<E>, Registry.Mutable<E> {
+    boolean contains(UUID uniqueId);
+
+    interface Mutable<E extends Identifiable>
+            extends IdentifiableRegistry<E>, Registry.Mutable<E> {
+    }
+
+    interface ArchetypeMutable<E extends Identifiable, A extends Archetype>
+            extends IdentifiableRegistry<E>, Registry.ArchetypeMutable<E, A> {
     }
 }

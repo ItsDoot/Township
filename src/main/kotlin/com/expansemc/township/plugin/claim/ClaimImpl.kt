@@ -2,18 +2,15 @@ package com.expansemc.township.plugin.claim
 
 import com.expansemc.township.api.TownshipAPI
 import com.expansemc.township.api.claim.Claim
-import com.expansemc.township.api.nation.NationWarp
 import com.expansemc.township.api.permission.Permission
 import com.expansemc.township.api.permission.PermissionHolder
 import com.expansemc.township.api.permission.PermissionTypes
 import com.expansemc.township.api.registry.type.WarpRegistry
 import com.expansemc.township.api.town.Town
-import com.expansemc.township.api.town.TownRole
-import com.expansemc.township.api.town.TownWarp
 import com.expansemc.township.plugin.registry.emptyRegistry
 import com.expansemc.township.plugin.registry.view.ClaimWarpRegistryView
 import com.expansemc.township.plugin.util.toTristate
-import com.expansemc.township.plugin.util.unwrap
+import com.expansemc.township.plugin.util.extension.unwrap
 import com.google.common.collect.Table
 import com.google.common.collect.Tables
 import org.spongepowered.api.Sponge
@@ -52,7 +49,7 @@ data class ClaimImpl(
     override fun getPermissionOverride(holder: PermissionHolder, permission: Permission): Tristate {
         check(holder is TownRole) { "Only town roles can have claim overrides" }
         check(permission.type == PermissionTypes.CLAIM) { "Claim overrides only work with claim permissions" }
-        return this.rolePermissionOverrides.get(holder.uniqueId, permission).toTristate()
+        return Tristate.fromNullableBoolean(this.rolePermissionOverrides.get(holder.uniqueId, permission))
     }
 
     override fun setPermissionOverride(holder: PermissionHolder, permission: Permission, value: Boolean) {

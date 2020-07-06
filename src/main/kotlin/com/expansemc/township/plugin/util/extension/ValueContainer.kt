@@ -1,4 +1,4 @@
-package com.expansemc.township.plugin.util
+package com.expansemc.township.plugin.util.extension
 
 import org.spongepowered.api.data.Key
 import org.spongepowered.api.data.value.SetValue

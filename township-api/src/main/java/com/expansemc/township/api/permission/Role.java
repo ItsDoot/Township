@@ -1,15 +1,16 @@
 package com.expansemc.township.api.permission;
 
 import com.expansemc.township.api.util.NamedIdentifiable;
-import org.spongepowered.api.util.ResettableBuilder;
+import com.expansemc.township.api.util.OwnedBy;
+import org.spongepowered.api.util.Identifiable;
 
 /**
  * A named permission holder, sorted by priority.
  */
-public interface Role extends NamedIdentifiable, PermissionHolder {
+public interface Role<Owner extends Identifiable> extends NamedIdentifiable, PermissionHolder, OwnedBy<Owner> {
 
     /**
-     * Gets the name of the role.
+     * Gets the name of this role.
      *
      * @return The name
      */
@@ -17,14 +18,14 @@ public interface Role extends NamedIdentifiable, PermissionHolder {
     String getName();
 
     /**
-     * Sets the name of the role.
+     * Sets the name of this role.
      *
      * @param name The new name
      */
     void setName(String name);
 
     /**
-     * Gets the priority of the role. Larger priority values take precedence
+     * Gets the priority of this role. Larger priority values take precedence
      * over smaller priority values.
      *
      * @return The priority
@@ -32,52 +33,9 @@ public interface Role extends NamedIdentifiable, PermissionHolder {
     int getPriority();
 
     /**
-     * Sets the priority of the role.
+     * Sets the priority of this role.
      *
      * @param priority The new priority
      */
     void setPriority(int priority);
-
-    interface Builder<T extends Role, B extends Builder<T, B>> extends ResettableBuilder<T, B> {
-
-        /**
-         * Sets the name of the role.
-         *
-         * @param name The name to use
-         * @return This builder, for chaining
-         */
-        B name(String name);
-
-        /**
-         * Sets the priority of the role.
-         *
-         * @param priority The priority to use
-         * @return This builder, for chaining
-         */
-        B priority(int priority);
-
-        /**
-         * Sets the permissions of the role.
-         *
-         * @param permissions The permissions to use
-         * @return This builder, for chaining
-         */
-        B permissions(Iterable<Permission> permissions);
-
-        /**
-         * Sets the permissions of the role.
-         *
-         * @param permissions The permissions to use
-         * @return This builder, for chaining
-         */
-        B permissions(Permission... permissions);
-
-        /**
-         * Builds the {@link Role} of type {@link T}.
-         *
-         * @return The built role
-         * @throws IllegalStateException If not all required options were specified
-         */
-        T build();
-    }
 }

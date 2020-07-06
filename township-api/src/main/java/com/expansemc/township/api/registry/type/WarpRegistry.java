@@ -1,16 +1,22 @@
 package com.expansemc.township.api.registry.type;
 
 import com.expansemc.township.api.registry.NamedIdentifiableRegistry;
-import com.expansemc.township.api.registry.Registry;
 import com.expansemc.township.api.warp.Warp;
+import com.expansemc.township.api.warp.WarpArchetype;
+import org.spongepowered.api.util.Identifiable;
 
 /**
  * An object which manages warps of a certain type (town, nation, etc).
  *
- * @param <W> The warp type
+ * @param <Owner> The warp owner type
  */
-public interface WarpRegistry<W extends Warp> extends NamedIdentifiableRegistry<W> {
+public interface WarpRegistry<Owner extends Identifiable> extends NamedIdentifiableRegistry<Warp<Owner>> {
 
-    interface Mutable<W extends Warp> extends WarpRegistry<W>, Registry.Mutable<W> {
+    interface Mutable<Owner extends Identifiable>
+            extends WarpRegistry<Owner>, NamedIdentifiableRegistry.Mutable<Warp<Owner>> {
+    }
+
+    interface ArchetypeMutable<Owner extends Identifiable>
+            extends WarpRegistry<Owner>, NamedIdentifiableRegistry.ArchetypeMutable<Warp<Owner>, WarpArchetype> {
     }
 }

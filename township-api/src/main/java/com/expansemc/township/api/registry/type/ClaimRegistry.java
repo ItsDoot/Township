@@ -1,6 +1,7 @@
 package com.expansemc.township.api.registry.type;
 
 import com.expansemc.township.api.claim.Claim;
+import com.expansemc.township.api.claim.ClaimArchetype;
 import com.expansemc.township.api.registry.Registry;
 import org.spongepowered.api.world.ServerLocation;
 import org.spongepowered.api.world.server.ServerWorld;
@@ -26,6 +27,7 @@ public interface ClaimRegistry extends Registry<Claim> {
      */
     Optional<Claim> get(ServerLocation location);
 
-    interface Mutable extends ClaimRegistry, Registry.Mutable<Claim> {
+    interface ArchetypeMutable
+            extends ClaimRegistry, Registry.ArchetypeMutable<Claim, ClaimArchetype> {
     }
 }

@@ -1,35 +1,23 @@
 package com.expansemc.township.api.town;
 
 import com.expansemc.township.api.bank.Bank;
-import com.expansemc.township.api.registry.type.ClaimRegistry;
 import com.expansemc.township.api.nation.Nation;
-import com.expansemc.township.api.registry.type.RoleRegistry;
 import com.expansemc.township.api.registry.central.CentralClaimRegistry;
-import com.expansemc.township.api.resident.Resident;
+import com.expansemc.township.api.registry.type.ClaimRegistry;
 import com.expansemc.township.api.registry.type.ResidentRegistry;
+import com.expansemc.township.api.registry.type.RoleRegistry;
+import com.expansemc.township.api.registry.type.WarpRegistry;
+import com.expansemc.township.api.resident.Resident;
 import com.expansemc.township.api.util.NamedIdentifiable;
 import com.expansemc.township.api.util.OwnedBy;
-import com.expansemc.township.api.registry.type.WarpRegistry;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.text.channel.MessageReceiver;
-import org.spongepowered.api.util.ResettableBuilder;
 
 import java.util.Optional;
 
 /**
  * Represents a named grouping of a bank, residents, roles, warps, and claims.
  */
-public interface Town extends NamedIdentifiable, MessageReceiver, OwnedBy<Resident>, Bank {
-
-    /**
-     * Creates a new {@link Builder} to build a {@link Town}.
-     *
-     * @return The new builder
-     */
-    static Builder builder() {
-        return Sponge.getRegistry().getBuilderRegistry().provideBuilder(Town.Builder.class);
-    }
+public interface Town extends NamedIdentifiable, MessageReceiver, OwnedBy.Mutable<Resident>, Bank {
 
     /**
      * Gets the name of this town.
@@ -106,14 +94,14 @@ public interface Town extends NamedIdentifiable, MessageReceiver, OwnedBy<Reside
      *
      * @return The role registry
      */
-    RoleRegistry.Mutable<TownRole> getRoleRegistry();
+    RoleRegistry.ArchetypeMutable<Town> getRoleRegistry();
 
     /**
      * Gets the registry used for managing this town's warps.
      *
      * @return The warp registry
      */
-    WarpRegistry.Mutable<TownWarp> getWarpRegistry();
+    WarpRegistry.ArchetypeMutable<Town> getWarpRegistry();
 
     /**
      * Gets the nation this town is part of.
@@ -128,65 +116,4 @@ public interface Town extends NamedIdentifiable, MessageReceiver, OwnedBy<Reside
      * @return True if part of a nation, false otherwise
      */
     boolean hasNation();
-
-    /**
-     * Sets the nation this town is part of.
-     *
-     * @param nation The town's new nation, or null to leave the nation
-     */
-    void setNation(@Nullable Nation nation);
-
-    /**
-     * Represents a builder to create {@link Town}s.
-     */
-    interface Builder extends ResettableBuilder<Town, Builder> {
-
-        /**
-         * Sets the name of the town.
-         *
-         * @param name The name to use
-         * @return This builder, for chaining
-         */
-        Builder name(String name);
-
-        /**
-         * Sets whether the town is joinable without an invite.
-         *
-         * @param open The open status to use
-         * @return This builder, for chaining
-         */
-        Builder open(boolean open);
-
-        /**
-         * Sets the owner of the town.
-         *
-         * @param owner The resident to use
-         * @return This builder, for chaining
-         */
-        Builder owner(Resident owner);
-
-        /**
-         * Sets the initial residents in the town.
-         *
-         * @param residents The residents to add
-         * @return This builder, for chaining
-         */
-        Builder residents(Iterable<Resident> residents);
-
-        /**
-         * Sets the initial residents in the town.
-         *
-         * @param residents The residents to add
-         * @return This builder, for chaining
-         */
-        Builder residents(Resident... residents);
-
-        /**
-         * Builds the {@link Town}.
-         *
-         * @return The built town
-         * @throws IllegalStateException If not all required options were specified
-         */
-        Town build();
-    }
 }

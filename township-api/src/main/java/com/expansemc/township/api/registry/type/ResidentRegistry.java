@@ -1,8 +1,8 @@
 package com.expansemc.township.api.registry.type;
 
-import com.expansemc.township.api.registry.IdentifiableRegistry;
-import com.expansemc.township.api.registry.Registry;
+import com.expansemc.township.api.registry.NamedIdentifiableRegistry;
 import com.expansemc.township.api.resident.Resident;
+import com.expansemc.township.api.resident.ResidentArchetype;
 import com.expansemc.township.api.resident.UserResident;
 import com.expansemc.township.api.resident.VirtualResident;
 
@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * An object which manages residents of a town, nation, etc.
  */
-public interface ResidentRegistry extends IdentifiableRegistry<Resident> {
+public interface ResidentRegistry extends NamedIdentifiableRegistry<Resident> {
 
     Collection<UserResident> getAllUsers();
 
@@ -27,6 +27,11 @@ public interface ResidentRegistry extends IdentifiableRegistry<Resident> {
 
     Optional<VirtualResident> getVirtual(String name);
 
-    interface Mutable extends ResidentRegistry, Registry.Mutable<Resident> {
+    interface Mutable
+            extends ResidentRegistry, NamedIdentifiableRegistry.Mutable<Resident> {
+    }
+
+    interface ArchetypeMutable
+            extends ResidentRegistry, NamedIdentifiableRegistry.ArchetypeMutable<Resident, ResidentArchetype> {
     }
 }

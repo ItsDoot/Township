@@ -4,6 +4,8 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.service.economy.Currency;
 import org.spongepowered.api.service.economy.EconomyService;
 import org.spongepowered.api.service.economy.account.Account;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -41,5 +43,15 @@ public interface Bank {
         return Sponge.getServiceManager().provide(EconomyService.class)
                 .map(service -> this.getBalance(service.getDefaultCurrency()))
                 .orElse(BigDecimal.ZERO);
+    }
+
+    default Text getFormattedBalance(Currency currency) {
+        return currency.format(this.getBalance(currency), 2);
+    }
+
+    default Text getFormattedBalance() {
+        return Sponge.getServiceManager().provide(EconomyService.class)
+                .map(service -> service.getDefaultCurrency().format(this.getBalance()))
+                .orElseGet(() -> Text.builder("<not enabled>").color(TextColors.RED).build());
     }
 }

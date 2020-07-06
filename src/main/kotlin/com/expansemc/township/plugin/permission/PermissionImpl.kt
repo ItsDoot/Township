@@ -3,7 +3,7 @@ package com.expansemc.township.plugin.permission
 import com.expansemc.township.api.permission.Permission
 import com.expansemc.township.api.permission.PermissionType
 import com.expansemc.township.api.permission.PermissionTypes
-import com.expansemc.township.plugin.util.wrap
+import com.expansemc.township.plugin.util.extension.wrap
 import org.spongepowered.api.CatalogKey
 import org.spongepowered.api.item.inventory.ItemStack
 import org.spongepowered.api.text.Text

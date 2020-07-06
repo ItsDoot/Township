@@ -2,19 +2,21 @@ package com.expansemc.township.api.util;
 
 import org.spongepowered.api.util.Identifiable;
 
+import java.util.UUID;
+
 /**
  * Represents an object that is owned by another object.
  *
- * @param <O> The owner type
+ * @param <Owner> The owner type
  */
-public interface OwnedBy<O extends Identifiable> {
+public interface OwnedBy<Owner extends Identifiable> {
 
     /**
      * Gets the owner of this object.
      *
      * @return The object owner
      */
-    O getOwner();
+    Owner getOwner();
 
     /**
      * Checks whether the provided object is the owner of this object.
@@ -22,12 +24,15 @@ public interface OwnedBy<O extends Identifiable> {
      * @param object The object to check
      * @return True if the object is this object's owner, false otherwise
      */
-    boolean isOwner(O object);
+    boolean isOwner(Owner object);
 
-    /**
-     * Sets the owner of this object.
-     *
-     * @param object The new owner
-     */
-    void setOwner(O object);
+    interface Mutable<Owner extends Identifiable> extends OwnedBy<Owner> {
+
+        /**
+         * Sets the owner of this object.
+         *
+         * @param object The new owner
+         */
+        void setOwner(Owner object);
+    }
 }

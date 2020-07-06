@@ -16,7 +16,7 @@ import org.spongepowered.api.util.ResettableBuilder;
 /**
  * Represents a named grouping of a bank, towns, roles, and warps.
  */
-public interface Nation extends NamedIdentifiable, MessageReceiver, OwnedBy<Town>, Bank {
+public interface Nation extends NamedIdentifiable, MessageReceiver, OwnedBy.Mutable<Town>, Bank {
 
     /**
      * Creates a new {@link Builder} to build a {@link Nation}.
@@ -96,7 +96,7 @@ public interface Nation extends NamedIdentifiable, MessageReceiver, OwnedBy<Town
      *
      * @return The town registry
      */
-    TownRegistry.Mutable getTownRegistry();
+    TownRegistry.ArchetypeMutable getTownRegistry();
 
     /**
      * Gets a read-only view into the residents in this nation's towns.
@@ -110,14 +110,14 @@ public interface Nation extends NamedIdentifiable, MessageReceiver, OwnedBy<Town
      *
      * @return The role registry
      */
-    RoleRegistry.Mutable<NationRole> getRoleRegistry();
+    RoleRegistry.ArchetypeMutable<Nation> getRoleRegistry();
 
     /**
      * Gets the registry used for managing this nation's warps.
      *
      * @return The warp registry
      */
-    WarpRegistry.Mutable<NationWarp> getWarpRegistry();
+    WarpRegistry.ArchetypeMutable<Nation> getWarpRegistry();
 
     /**
      * Represents a builder to create {@link Nation}s.

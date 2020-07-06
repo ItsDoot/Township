@@ -1,5 +1,6 @@
 package com.expansemc.township.api.registry.central;
 
+import com.expansemc.township.api.TownshipAPI;
 import com.expansemc.township.api.claim.Claim;
 import com.expansemc.township.api.registry.type.ClaimRegistry;
 import com.expansemc.township.api.town.Town;
@@ -10,7 +11,11 @@ import java.util.Collection;
 /**
  * Represents the central registry for managing claims (chunks owned by towns).
  */
-public interface CentralClaimRegistry extends ClaimRegistry.Mutable {
+public interface CentralClaimRegistry extends ClaimRegistry.ArchetypeMutable {
+
+    static CentralClaimRegistry getInstance() {
+        return TownshipAPI.getInstance().getClaimRegistry();
+    }
 
     /**
      * Gets all claims located in the provided {@link Town town}.

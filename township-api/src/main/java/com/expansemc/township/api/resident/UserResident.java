@@ -1,7 +1,7 @@
 package com.expansemc.township.api.resident;
 
-import com.expansemc.township.api.TownshipAPI;
 import com.expansemc.township.api.permission.Permission;
+import com.expansemc.township.api.registry.central.CentralClaimRegistry;
 import com.expansemc.township.api.registry.type.ResidentRegistry;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.living.player.User;
@@ -40,7 +40,7 @@ public interface UserResident extends Resident {
      */
     User getUser();
 
-    ResidentRegistry.Mutable getFriends();
+    ResidentRegistry.ArchetypeMutable getFriends();
 
     /**
      * {@inheritDoc}
@@ -60,7 +60,7 @@ public interface UserResident extends Resident {
      */
     default Tristate getPermissionValueHere(Permission permission) {
         return this.getUser().getPlayer()
-                .flatMap(player -> TownshipAPI.getInstance().getClaimRegistry().get(player.getServerLocation()))
+                .flatMap(player -> CentralClaimRegistry.getInstance().get(player.getServerLocation()))
                 .map(claim -> this.getPermissionValue(permission, claim))
                 .orElse(Tristate.UNDEFINED);
     }

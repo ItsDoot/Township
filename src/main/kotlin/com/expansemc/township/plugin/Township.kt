@@ -8,7 +8,7 @@ import com.expansemc.township.api.permission.PermissionType
 import com.expansemc.township.api.registry.central.CentralResidentRegistry
 import com.expansemc.township.api.registry.central.CentralTownRegistry
 import com.expansemc.township.plugin.registry.central.CentralClaimRegistryImpl
-import com.expansemc.township.plugin.listener.BlockListener
+import com.expansemc.township.plugin.listener.ClaimPermissionListener
 import com.expansemc.township.plugin.listener.ConnectionListener
 import com.expansemc.township.plugin.permission.PermissionImpl
 import com.expansemc.township.plugin.permission.PermissionTypeImpl
@@ -114,7 +114,7 @@ class Township {
     fun onStarting(event: StartingServerEvent) {
         this.logger.info("Registering listeners...")
 
-        Sponge.getEventManager().registerListeners(this.container, BlockListener())
+        Sponge.getEventManager().registerListeners(this.container, ClaimPermissionListener())
         Sponge.getEventManager().registerListeners(this.container, ConnectionListener())
     }
 }

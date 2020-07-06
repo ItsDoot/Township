@@ -5,8 +5,8 @@ import com.expansemc.township.api.resident.Resident
 import com.expansemc.township.api.registry.type.ResidentRegistry
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.resident.VirtualResident
-import com.expansemc.township.plugin.util.unwrap
-import com.expansemc.township.plugin.util.wrap
+import com.expansemc.township.plugin.util.extension.unwrap
+import com.expansemc.township.plugin.util.extension.wrap
 import java.util.*
 import kotlin.collections.HashSet
 

@@ -3,18 +3,18 @@ package com.expansemc.township.plugin.town
 import com.expansemc.township.api.TownshipAPI
 import com.expansemc.township.api.registry.type.ClaimRegistry
 import com.expansemc.township.api.nation.Nation
+import com.expansemc.township.api.permission.Role
 import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.resident.Resident
 import com.expansemc.township.api.registry.type.ResidentRegistry
 import com.expansemc.township.api.town.Town
-import com.expansemc.township.api.town.TownRole
-import com.expansemc.township.api.town.TownWarp
 import com.expansemc.township.api.registry.type.WarpRegistry
 import com.expansemc.township.plugin.registry.view.TownClaimRegistryView
 import com.expansemc.township.plugin.registry.RoleRegistryImpl
 import com.expansemc.township.plugin.registry.ResidentRegistryImpl
+import com.expansemc.township.plugin.registry.WarpRegistryImpl
 import com.expansemc.township.plugin.util.registry.RegistryMessageChannel
-import com.expansemc.township.plugin.util.wrap
+import com.expansemc.township.plugin.util.extension.wrap
 import com.expansemc.township.plugin.warp.SimpleWarpRegistry
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.service.economy.EconomyService
@@ -29,12 +29,12 @@ data class TownImpl(
     private var open: Boolean,
     private var ownerId: UUID,
     private var nationId: UUID?,
-    private val visitorRole: TownRole
+    private val visitorRole: Role<Town>
 ) : Town {
 
     private val residentRegistry = ResidentRegistryImpl()
     private val roleRegistry = RoleRegistryImpl(this.visitorRole)
-    private val warpRegistry = SimpleWarpRegistry<TownWarp>()
+    private val warpRegistry = WarpRegistryImpl<Town>()
 
     private val messageChannel = RegistryMessageChannel(this.residentRegistry)
 
@@ -71,19 +71,14 @@ data class TownImpl(
 
     override fun hasNation(): Boolean = this.nationId != null
 
-    // TODO event
-    override fun setNation(nation: Nation?) {
-        this.nationId = nation?.uniqueId
-    }
-
     override fun getResidentRegistry(): ResidentRegistry.Mutable = this.residentRegistry
 
     override fun getClaimRegistry(): ClaimRegistry =
         TownClaimRegistryView(TownshipAPI.getInstance().claimRegistry, this)
 
-    override fun getRoleRegistry(): RoleRegistry.Mutable<TownRole> = this.roleRegistry
+    override fun getRoleRegistry(): RoleRegistry.ArchetypeMutable<Town> = this.roleRegistry
 
-    override fun getWarpRegistry(): WarpRegistry.Mutable<TownWarp> = this.warpRegistry
+    override fun getWarpRegistry(): WarpRegistry.ArchetypeMutable<Town> = this.warpRegistry
 
     override fun sendMessage(message: Text) = this.messageChannel.send(message)
 

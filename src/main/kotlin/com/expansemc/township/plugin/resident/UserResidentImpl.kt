@@ -1,15 +1,14 @@
 package com.expansemc.township.plugin.resident
 
 import com.expansemc.township.api.TownshipAPI
-import com.expansemc.township.api.nation.NationRole
 import com.expansemc.township.api.permission.Permission
 import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.registry.type.ResidentRegistry
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.town.Town
-import com.expansemc.township.api.town.TownRole
 import com.expansemc.township.plugin.data.TownshipKeys
-import com.expansemc.township.plugin.util.getSetOrEmpty
+import com.expansemc.township.plugin.util.extension.getSetOrEmpty
+import com.expansemc.township.plugin.util.extension.unwrap
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.entity.living.player.User
 import org.spongepowered.api.profile.GameProfile
@@ -40,8 +39,10 @@ data class UserResidentImpl(private val uniqueId: UUID) : UserResident {
         }
     }
 
-    override fun getPermissions(): Collection<Permission> =
-        this.user.getSetOrEmpty(TownshipKeys.PERMISSIONS)
+    override fun getPermissions(): Collection<Permission> {
+        val town: Town = this.town.unwrap() ?: return emptyList()
+        val townRoleIds = this.user.inventory
+    }
 
     override fun hasPermission(permission: Permission): Boolean =
         permission in this.user.getSetOrEmpty(TownshipKeys.PERMISSIONS)
@@ -69,13 +70,13 @@ data class UserResidentImpl(private val uniqueId: UUID) : UserResident {
         }
     }
 
-    override fun getTownRoles(): RoleRegistry.Mutable<TownRole> = TODO()
+    override fun getTownRoleRegistry(): RoleRegistry.ArchetypeMutable<TownRole> = TODO()
 
-    override fun getNationRoles(): RoleRegistry.Mutable<NationRole> = TODO()
+    override fun getNationRoleRegistry(): RoleRegistry.ArchetypeMutable<NationRole> = TODO()
 
     override fun getUser(): User =
         Sponge.getServiceManager().provideUnchecked(UserStorageService::class.java)
             .getOrCreate(GameProfile.of(uniqueId))
 
-    override fun getFriends(): ResidentRegistry.Mutable = TODO()
+    override fun getFriends(): ResidentRegistry.ArchetypeMutable = TODO()
 }

@@ -1,13 +1,10 @@
 package com.expansemc.township.api.resident;
 
 import com.expansemc.township.api.nation.Nation;
-import com.expansemc.township.api.nation.NationRole;
 import com.expansemc.township.api.permission.PermissionHolder;
 import com.expansemc.township.api.registry.type.RoleRegistry;
 import com.expansemc.township.api.town.Town;
-import com.expansemc.township.api.town.TownRole;
 import com.expansemc.township.api.util.NamedIdentifiable;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.api.service.economy.account.Account;
 import org.spongepowered.api.text.channel.MessageReceiver;
 
@@ -33,13 +30,6 @@ public interface Resident extends NamedIdentifiable, MessageReceiver, Permission
     boolean hasTown();
 
     /**
-     * Sets the {@link Town} that this resident is part of.
-     *
-     * @param town This resident's new town
-     */
-    void setTown(@Nullable Town town);
-
-    /**
      * Checks whether this resident is the owner of their town.
      *
      * @return True if this resident owns their town, false otherwise
@@ -57,9 +47,9 @@ public interface Resident extends NamedIdentifiable, MessageReceiver, Permission
         return this.getTown().flatMap(Town::getNation);
     }
 
-    RoleRegistry.Mutable<TownRole> getTownRoles();
+    RoleRegistry.ArchetypeMutable<Town> getTownRoleRegistry();
 
-    RoleRegistry.Mutable<NationRole> getNationRoles();
+    RoleRegistry.ArchetypeMutable<NationRole> getNationRoleRegistry();
 
     /**
      * Gets the {@link Account} associated with this resident.
