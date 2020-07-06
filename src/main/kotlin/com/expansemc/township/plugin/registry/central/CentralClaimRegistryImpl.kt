@@ -2,6 +2,7 @@ package com.expansemc.township.plugin.registry.central
 
 import com.expansemc.township.api.registry.central.CentralClaimRegistry
 import com.expansemc.township.api.claim.Claim
+import com.expansemc.township.api.claim.ClaimArchetype
 import com.expansemc.township.api.town.Town
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
@@ -14,6 +15,12 @@ class CentralClaimRegistryImpl : CentralClaimRegistry {
 
     private val claimTable: Table<UUID, Vector3i, Claim> =
         HashBasedTable.create()
+
+    private fun fromArchetype(archetype: ClaimArchetype): Claim {
+        TODO()
+    }
+
+    override fun size(): Int = this.claimTable.size()
 
     override fun getAll(): Collection<Claim> =
         this.claimTable.values().toSet()
@@ -33,21 +40,26 @@ class CentralClaimRegistryImpl : CentralClaimRegistry {
     override fun contains(claim: Claim): Boolean =
         this.claimTable.contains(claim.world.uniqueId, claim.chunkPosition)
 
-    override fun add(claim: Claim): Boolean {
-        if (claim in this) return false
+    override fun contains(location: ServerLocation): Boolean =
+        this.claimTable.contains(location.world.uniqueId, location.chunkPosition)
+
+    override fun register(archetype: ClaimArchetype): Optional<Claim> {
+        if (this.claimTable.contains(archetype.world.uniqueId, archetype.chunkPosition)) return Optional.empty()
 
         // TODO event
 
-        this.claimTable.put(claim.world.uniqueId, claim.chunkPosition, claim)
-        return true
+        val element: Claim = fromArchetype(archetype)
+
+        this.claimTable.put(element.world.uniqueId, element.chunkPosition, element)
+        return Optional.of(element)
     }
 
-    override fun remove(claim: Claim): Boolean {
-        if (claim !in this) return false
+    override fun unregister(element: Claim): Boolean {
+        if (element !in this) return false
 
         // TODO event
 
-        this.claimTable.remove(claim.world.uniqueId, claim.chunkPosition)
+        this.claimTable.remove(element.world.uniqueId, element.chunkPosition)
         return true
     }
 }

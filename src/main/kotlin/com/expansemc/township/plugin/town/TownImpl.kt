@@ -1,21 +1,20 @@
 package com.expansemc.township.plugin.town
 
 import com.expansemc.township.api.TownshipAPI
-import com.expansemc.township.api.registry.type.ClaimRegistry
 import com.expansemc.township.api.nation.Nation
 import com.expansemc.township.api.permission.Role
-import com.expansemc.township.api.registry.type.RoleRegistry
-import com.expansemc.township.api.resident.Resident
+import com.expansemc.township.api.registry.type.ClaimRegistry
 import com.expansemc.township.api.registry.type.ResidentRegistry
-import com.expansemc.township.api.town.Town
+import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.registry.type.WarpRegistry
-import com.expansemc.township.plugin.registry.view.TownClaimRegistryView
-import com.expansemc.township.plugin.registry.RoleRegistryImpl
+import com.expansemc.township.api.resident.Resident
+import com.expansemc.township.api.town.Town
 import com.expansemc.township.plugin.registry.ResidentRegistryImpl
+import com.expansemc.township.plugin.registry.RoleRegistryImpl
 import com.expansemc.township.plugin.registry.WarpRegistryImpl
-import com.expansemc.township.plugin.util.registry.RegistryMessageChannel
+import com.expansemc.township.plugin.registry.view.TownClaimRegistryView
 import com.expansemc.township.plugin.util.extension.wrap
-import com.expansemc.township.plugin.warp.SimpleWarpRegistry
+import com.expansemc.township.plugin.util.registry.RegistryMessageChannel
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.service.economy.EconomyService
 import org.spongepowered.api.service.economy.account.Account
@@ -29,14 +28,13 @@ data class TownImpl(
     private var open: Boolean,
     private var ownerId: UUID,
     private var nationId: UUID?,
-    private val visitorRole: Role<Town>
+    private val visitorRole: Role<Town>,
+    private val residentRegistry: ResidentRegistry.Mutable = ResidentRegistryImpl(),
+    private val roleRegistry: RoleRegistry.ArchetypeMutable<Town> = RoleRegistryImpl(visitorRole),
+    private val warpRegistry: WarpRegistry.ArchetypeMutable<Town> = WarpRegistryImpl()
 ) : Town {
 
-    private val residentRegistry = ResidentRegistryImpl()
-    private val roleRegistry = RoleRegistryImpl(this.visitorRole)
-    private val warpRegistry = WarpRegistryImpl<Town>()
-
-    private val messageChannel = RegistryMessageChannel(this.residentRegistry)
+    private val messageChannel: MessageChannel = RegistryMessageChannel(this.residentRegistry)
 
     override fun getUniqueId(): UUID = this.uniqueId
 

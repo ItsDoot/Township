@@ -13,11 +13,17 @@ data class TownClaimRegistryView(
     private val town: Town
 ) : ClaimRegistry {
 
+    override fun size(): Int =
+        this.central.size()
+
     override fun getAll(): Collection<Claim> =
         this.central.getAllFor(this.town)
 
     override fun contains(element: Claim): Boolean =
         element.town == this.town && element in central
+
+    override fun contains(location: ServerLocation): Boolean =
+        this.central.get(location).filter { it.town == this.town }.isPresent
 
     override fun getAllFor(world: ServerWorld): Collection<Claim> =
         this.central.getAllFor(this.town, world)

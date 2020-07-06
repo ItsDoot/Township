@@ -11,11 +11,11 @@ class CentralResidentRegistryImpl : ResidentRegistryImpl(), CentralResidentRegis
         TODO()
     }
 
-    override fun getOrCreateUser(user: User?): UserResident {
+    override fun getOrCreateUser(user: User): UserResident {
         TODO()
     }
 
-    override fun getOrCreateVirtual(name: String?): VirtualResident {
+    override fun getOrCreateVirtual(name: String): VirtualResident {
         TODO()
     }
 }

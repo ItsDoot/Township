@@ -27,6 +27,8 @@ public interface ClaimRegistry extends Registry<Claim> {
      */
     Optional<Claim> get(ServerLocation location);
 
+    boolean contains(ServerLocation location);
+
     interface ArchetypeMutable
             extends ClaimRegistry, Registry.ArchetypeMutable<Claim, ClaimArchetype> {
     }

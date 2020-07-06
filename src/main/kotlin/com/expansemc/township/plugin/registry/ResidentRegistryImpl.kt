@@ -10,7 +10,7 @@ import java.util.*
 
 open class ResidentRegistryImpl :
     AbstractNamedIdentifiableRegistry.Archetypal<Resident, ResidentArchetype>(),
-    ResidentRegistry.ArchetypeMutable {
+    ResidentRegistry.Mutable, ResidentRegistry.ArchetypeMutable {
 
     override fun fromArchetype(archetype: ResidentArchetype): Resident {
         TODO()

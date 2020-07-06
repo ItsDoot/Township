@@ -4,12 +4,14 @@ import com.expansemc.township.api.permission.RoleArchetype;
 import com.expansemc.township.api.town.Town;
 import com.expansemc.township.api.util.Archetype;
 import com.expansemc.township.api.warp.WarpArchetype;
+import org.spongepowered.api.util.Nameable;
 import org.spongepowered.api.util.ResettableBuilder;
 
 import java.util.Set;
 
-public interface NationArchetype extends Archetype {
+public interface NationArchetype extends Archetype, Nameable {
 
+    @Override
     String getName();
 
     boolean isOpen();

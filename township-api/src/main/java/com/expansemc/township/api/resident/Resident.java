@@ -49,7 +49,7 @@ public interface Resident extends NamedIdentifiable, MessageReceiver, Permission
 
     RoleRegistry.ArchetypeMutable<Town> getTownRoleRegistry();
 
-    RoleRegistry.ArchetypeMutable<NationRole> getNationRoleRegistry();
+    RoleRegistry.ArchetypeMutable<Nation> getNationRoleRegistry();
 
     /**
      * Gets the {@link Account} associated with this resident.

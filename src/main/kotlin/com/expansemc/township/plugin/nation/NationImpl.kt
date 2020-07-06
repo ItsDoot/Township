@@ -2,6 +2,7 @@ package com.expansemc.township.plugin.nation
 
 import com.expansemc.township.api.TownshipAPI
 import com.expansemc.township.api.nation.Nation
+import com.expansemc.township.api.permission.Role
 import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.registry.type.ResidentRegistry
 import com.expansemc.township.api.town.Town
@@ -10,8 +11,8 @@ import com.expansemc.township.api.registry.type.WarpRegistry
 import com.expansemc.township.plugin.registry.RoleRegistryImpl
 import com.expansemc.township.plugin.registry.view.NationResidentRegistryView
 import com.expansemc.township.plugin.registry.TownRegistryImpl
+import com.expansemc.township.plugin.registry.WarpRegistryImpl
 import com.expansemc.township.plugin.util.registry.RegistryMessageChannel
-import com.expansemc.township.plugin.warp.SimpleWarpRegistry
 import org.spongepowered.api.Sponge
 import org.spongepowered.api.service.economy.EconomyService
 import org.spongepowered.api.service.economy.account.Account
@@ -24,12 +25,12 @@ data class NationImpl(
     private var name: String,
     private var open: Boolean,
     private var ownerId: UUID,
-    private val visitorRole: NationRole
+    private val visitorRole: Role<Nation>
 ) : Nation {
 
     private val townRegistry = TownRegistryImpl()
     private val roleRegistry = RoleRegistryImpl(this.visitorRole)
-    private val warpRegistry = SimpleWarpRegistry<NationWarp>()
+    private val warpRegistry = WarpRegistryImpl<Nation>()
 
     private val messageChannel = RegistryMessageChannel(this.residentRegistry)
 
@@ -63,9 +64,9 @@ data class NationImpl(
     override fun getResidentRegistry(): ResidentRegistry =
         NationResidentRegistryView(this)
 
-    override fun getRoleRegistry(): RoleRegistry.ArchetypeMutable<NationRole> = this.roleRegistry
+    override fun getRoleRegistry(): RoleRegistry.ArchetypeMutable<Nation> = this.roleRegistry
 
-    override fun getWarpRegistry(): WarpRegistry.ArchetypeMutable<NationWarp> = this.warpRegistry
+    override fun getWarpRegistry(): WarpRegistry.ArchetypeMutable<Nation> = this.warpRegistry
 
     override fun sendMessage(message: Text) = this.messageChannel.send(message)
 

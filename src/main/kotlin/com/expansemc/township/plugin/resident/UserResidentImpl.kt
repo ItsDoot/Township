@@ -1,9 +1,10 @@
 package com.expansemc.township.plugin.resident
 
 import com.expansemc.township.api.TownshipAPI
+import com.expansemc.township.api.nation.Nation
 import com.expansemc.township.api.permission.Permission
-import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.registry.type.ResidentRegistry
+import com.expansemc.township.api.registry.type.RoleRegistry
 import com.expansemc.township.api.resident.UserResident
 import com.expansemc.township.api.town.Town
 import com.expansemc.township.plugin.data.TownshipKeys
@@ -42,6 +43,7 @@ data class UserResidentImpl(private val uniqueId: UUID) : UserResident {
     override fun getPermissions(): Collection<Permission> {
         val town: Town = this.town.unwrap() ?: return emptyList()
         val townRoleIds = this.user.inventory
+        TODO()
     }
 
     override fun hasPermission(permission: Permission): Boolean =
@@ -62,17 +64,9 @@ data class UserResidentImpl(private val uniqueId: UUID) : UserResident {
     override fun hasTown(): Boolean =
         this.user.get(TownshipKeys.TOWN).isPresent
 
-    override fun setTown(town: Town?) {
-        if (town == null) {
-            this.user.remove(TownshipKeys.TOWN)
-        } else {
-            this.user.offer(TownshipKeys.TOWN, town.uniqueId)
-        }
-    }
+    override fun getTownRoleRegistry(): RoleRegistry.ArchetypeMutable<Town> = TODO()
 
-    override fun getTownRoleRegistry(): RoleRegistry.ArchetypeMutable<TownRole> = TODO()
-
-    override fun getNationRoleRegistry(): RoleRegistry.ArchetypeMutable<NationRole> = TODO()
+    override fun getNationRoleRegistry(): RoleRegistry.ArchetypeMutable<Nation> = TODO()
 
     override fun getUser(): User =
         Sponge.getServiceManager().provideUnchecked(UserStorageService::class.java)
